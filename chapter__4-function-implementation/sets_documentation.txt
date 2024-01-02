@@ -1,0 +1,14 @@
+What is a set in python
+-----------------------------------------------------------------------------------------------------------------------
+A Set in Python programming is an unordered collection data type that is iterable, mutable and has no duplicate elements.
+
+The major advantage of using a set, as opposed to a list, is that it has a highly optimized method for checking whether
+a specific element is contained in the set.
+
+Since sets are unordered, we cannot access items using indexes as we do in lists.
+
+
+Python Frozen Sets
+-----------------------------------------------------------------------------------------------------------------------
+Frozen sets in Python are immutable objects that only support methods and operators that produce a result without
+affecting the frozen set or sets to which they are applied. It can be done with frozenset() method in Python.

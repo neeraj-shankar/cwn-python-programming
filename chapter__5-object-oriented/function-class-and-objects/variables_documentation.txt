@@ -1,0 +1,37 @@
+Overview on class and instance variable
+-----------------------------------------------------------------------------------------------------------------------
+In Python, class and instance variables are used to store data within classes, but they have different scopes and
+purposes.
+
+Class Variables
+-----------------------------------------------------------------------------------------------------------------------
+1. Class variables are shared among all instances of a class.
+2. They are defined within the class but outside of any instance methods.
+3. Class variables are accessed using the class name or an instance of the class.
+4. Changes to a class variable are reflected in all instances of the class.
+5. They are often used to store constants or shared data among instances.
+
+example class variable
+-----------------------------------------------------------
+class MyClass:
+    class_variable = 10  # This is a class variable
+
+    def __init__(self, instance_variable):
+        self.instance_variable = instance_variable  # This is an instance variable
+
+# Accessing class variable
+print(MyClass.class_variable)  # Output: 10
+
+# Creating instances
+obj1 = MyClass(20)
+obj2 = MyClass(30)
+
+# Accessing instance variables
+print(obj1.instance_variable)  # Output: 20
+print(obj2.instance_variable)  # Output: 30
+
+# Modifying class variable
+MyClass.class_variable = 15
+print(obj1.class_variable)  # Output: 15
+print(obj2.class_variable)  # Output: 15
+-----------------------------------------------------------

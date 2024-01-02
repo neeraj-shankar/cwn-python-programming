@@ -1,0 +1,34 @@
+Overview on multi threading and  multi processing
+-----------------------------------------------------------------------------------------------------------------------
+Multi-threading and multiprocessing are two approaches in Python for achieving concurrent execution, which allows you
+to execute multiple tasks or processes simultaneously to improve performance and responsiveness. However, they differ in
+how they achieve concurrency and handle resources.
+
+Multi-Threading:
+-----------------------------------------------------------------------------------------------------------------------
+Multi-threading involves using multiple threads within a single process. Threads are lighter-weight than processes and
+share the same memory space, making it easier to share data between threads. Python's threading module provides support
+for creating and managing threads.
+
+Key points about multi-threading:
+
+1. Threads run in the same process and share memory.
+2. Useful for I/O-bound tasks (tasks that involve waiting, such as network communication or file I/O).
+3. Python's Global Interpreter Lock (GIL) restricts true parallelism in multi-threading, making it less effective for
+   CPU-bound tasks (tasks that involve computation).
+4. Limited by the GIL, multi-threading is often not the best choice for CPU-bound applications.
+
+
+Multiprocessing
+-----------------------------------------------------------------------------------------------------------------------
+Multiprocessing involves using multiple processes, each with its own memory space. Processes are more isolated from each
+other compared to threads and can achieve true parallelism by utilizing multiple CPU cores. Python's multiprocessing
+module provides support for creating and managing processes.
+
+Key points about multiprocessing:
+
+1. Processes run in separate memory spaces, which avoids the limitations of the GIL.
+2. Useful for CPU-bound tasks that involve computation.Overcomes the GIL limitations and can achieve true parallelism
+   by utilizing multiple CPU cores.
+3. More resource-intensive than multi-threading due to separate memory spaces.
+4. Here's a basic example to illustrate the difference between multi-threading and multiprocessing:

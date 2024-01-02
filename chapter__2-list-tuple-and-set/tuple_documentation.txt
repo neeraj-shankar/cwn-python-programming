@@ -1,0 +1,85 @@
+What is a tuple in Python
+-----------------------------------------------------------------------------------------------------------------------
+Python Tuple is a collection of objects separated by commas. In some ways, a tuple is similar to a Python list in terms of 
+indexing, nested objects, and repetition but the main difference between both is Python tuple is immutable, unlike the Python 
+mutable list.
+
+Note: In case your generating a tuple with a single element, make sure to add a comma after the element.
+
+
+Tuple Constructor in Python
+-----------------------------------------------------------------------------------------------------------------------
+To create a tuple with a tuple constructor, we will pass the elements as its parameters.
+example--> tuple_constructor = tuple(("DSA", "development", "deep learning"))
+
+
+What is Immutable in Tuples?
+-----------------------------------------------------------------------------------------------------------------------
+Tuples are immutable and ordered and allow duplicate values. 
+Some Characteristics of Tuples in Python:
+    1. We can find items in a tuple since finding any item does not make changes in the tuple.
+    2. One cannot add items to a tuple once it is created. 
+    3. Tuples cannot be appended or extended.
+    4. We cannot remove items from a tuple once it is created. 
+
+
+Operations on Tuple
+-----------------------------------------------------------------------------------------------------------------------
+
+1. accessing using positive and negative indexing
+-----------------------------------------------------------
+animal_list = ("Tiger", "Lion", "Zebra")
+
+animal_list[0] # positive index
+animal_list[-1] # negative index
+
+2. Concatenation of Python Tuples
+-----------------------------------------------------------
+tuple1 = (0, 1, 2, 3)
+tuple2 = ('python', 'geek')
+
+tuple3 = tuple1 + tuple2
+output --> (0, 1, 2, 3, 'python', 'geek')
+
+3. Nesting of Python Tuples
+-----------------------------------------------------------
+tuple1 = (0, 1, 2, 3)
+tuple2 = ('python', 'geek')
+
+tuple3 (tuple1, tuple2)
+output --> ((0, 1, 2, 3), ('python', 'geek'))
+
+4. Repetition Python Tuples
+-----------------------------------------------------------
+We can create a tuple of multiple same elements from a single element in that tuple.
+tuple3 = ('python',)*3
+output --> ('python', 'python', 'python')
+
+5. Slicing Tuples in Python
+-----------------------------------------------------------
+Slicing a Python tuple means dividing a tuple into small tuples using the indexing method.
+
+6. Deleting a Tuple in Python
+-----------------------------------------------------------
+Python does not allow us to delete a tuple using the ‘del’ keyword once created.
+
+Result in --> NameError: name 'tuple3' is not defined
+
+7. Finding the Length of a Python Tuple
+-----------------------------------------------------------
+To find the length of a tuple, we can use Python’s len() function and pass the tuple as the parameter.
+
+8. Multiple Data Types With Tuple
+-----------------------------------------------------------
+Tuples in Python are heterogeneous in nature. This means tuples support elements with multiple datatypes.
+
+
+9. Converting a List to a Tuple
+-----------------------------------------------------------
+by using the tuple() constructor and passing the list as its parameters.
+example -->
+
+
+
+
+

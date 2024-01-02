@@ -1,0 +1,68 @@
+Types of Operators in Python
+-----------------------------------------------------------------------------------------------------------------------
+1. Arithmetic Operators
+2. Comparison Operators
+3. Logical Operators
+4. Bitwise Operators
+5. Assignment Operators
+6. Identity Operators and Membership Operators
+
+Arithmetic Operators in Python
+-----------------------------------------------------------------------------------------------------------------------
+Operator	Description	                                                                    Syntax
++	        Addition: adds two operands	                                                    x + y
+–	        Subtraction: subtracts two operands	                                            x – y
+*	        Multiplication: multiplies two operands	                                        x * y
+/	        Division (float): divides the first operand by the second	                    x / y
+//	        Division (floor): divides the first operand by the second	                    x // y
+%	        Modulus: returns the remainder when the first operand is divided by the second	x % y
+**	        Power: Returns first raised to power second	                                    x ** y
+
+Float division
+-----------------------------
+The quotient returned by this operator is always a float number, no matter if two numbers are integers.
+
+Integer division( Floor division)
+The quotient returned by this operator is dependent on the argument being passed. If any of the numbers is float,
+it returns output in float. It is also known as Floor division because, if any number is negative, then the output will
+be floored.
+
+Precedence of Arithmetic Operators in Python
+-----------------------------------------------------------------------------------------------------------------------
+The precedence of Arithmetic Operators in python is as follows:
+
+    P – Parentheses
+    E – Exponentiation
+    M – Multiplication (Multiplication and division have the same precedence)
+    D – Division
+    A – Addition (Addition and subtraction have the same precedence)
+    S – Subtraction
+
+Logical Operators in Python
+-----------------------------------------------------------------------------------------------------------------------
+Operator	                        Description	                                                    Syntax
+and	                                Logical AND: True if both the operands are true	                x and y
+or	                                Logical OR: True if either of the operands is true 	            x or y
+not	                                Logical NOT: True if the operand is false 	                    not x
+
+The precedence of Logical Operators in python is as follows:
+1. Logical not
+2. logical and
+3. logical or
+
+Identity Operators in Python
+-----------------------------------------------------------------------------------------------------------------------
+In Python, is and is not are the identity operators both are used to check if two values are located on the same part
+of the memory. Two variables that are equal do not imply that they are identical.
+
+Membership Operators in Python
+-----------------------------------------------------------------------------------------------------------------------
+In Python, in and not in are the membership operators that are used to test whether a value or variable is in a sequence.
+
+Ternary Operator in Python
+-----------------------------------------------------------------------------------------------------------------------
+also known as conditional expressions are operators that evaluate something based on a condition being true or false.
+It was added to Python in version 2.5.
+
+Syntax :  [on_true] if [expression] else [on_false]
+eg--> min = a if a < b else b
