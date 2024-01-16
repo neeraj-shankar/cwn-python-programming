@@ -67,3 +67,40 @@ for num in numbers:
         break
 else:
     print(f"All numbers are positive")  # All numbers are positive
+
+##############################################################################
+## match statement: A match statement takes an expression and compares its
+## value to successive patterns given as one or more case blocks
+## Example: The program to validate different status codes
+##############################################################################
+
+
+def http_error(status):
+    match status:
+        case 400:
+            print(f"Message: {status}: Bad Request.")
+        case 404:
+            print(f"Message: {status}: Resource Not Found.")
+        case _:
+            # gets executed when none of the case matches
+            print(f"Message: {status}: The status code is not valid.")
+
+
+# making the function call with input data
+
+input_status = 404
+http_error(input_status)  # Message: 404: Resource Not Found.
+
+##############################################################################
+## enumerate is a built-in function in Python that is used to iterate over a 
+## sequence (such as a list, tuple, or string) along with an index, providing 
+## both the item and its position.
+## Syntax: enumerate(iterable, start=0)
+##############################################################################
+
+fruits = ["Apple", "Orange", "Mango", "Blueberry"]
+
+print(list(enumerate(fruits))) # [(0, 'Apple'), (1, 'Orange'), (2, 'Mango'), (3, 'Bluberry')]
+
+for index, fruit in enumerate(fruits, start=0):
+    print(f"Index: {index}, Value: {fruit}")

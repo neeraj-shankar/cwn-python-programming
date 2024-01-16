@@ -1,27 +1,9 @@
 What is decorator in python?
 -----------------------------------------------------------------------------------------------------------------------
-1. decorator is a special type of function that can be used to modify or enhance the behavior of other functions or methods.
-2. Decorators provide a way to add functionality to functions without modifying their actual code.
-
-3. Decorators are often used for tasks such as logging, validation, authorization, and code instrumentation.
-4. They are especially useful for applying common behavior to multiple functions in a clean and consistent manner.
-
-Basic Syntax
------------------------------------------------------------------------------------------------------------------------
-def decorator_function(original_function):
-    def wrapper_function(*args, **kwargs):
-        # Code to run before the original function
-        result = original_function(*args, **kwargs)
-        # Code to run after the original function
-        return result
-    return wrapper_function
-
-# Applying the decorator to a function
-@decorator_function
-def my_function():
-    # Function code
-    pass
-
+1. A Decorator is a function that takes another function and extends the behavior of the latter function without 
+   explicitly modifying it.
+2. Decorators are often used for tasks such as logging, validation, authorization, and code instrumentation.
+3. They are especially useful for applying common behavior to multiple functions in a clean and consistent manner.
 
 Order of execution decorator applied to a function
 -----------------------------------------------------------------------------------------------------------------------
