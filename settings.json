@@ -1,0 +1,14 @@
+
+{
+// Controls the font family for CodeLens.
+"editor.codeLensFontFamily": "Ubuntu",
+
+// Controls the font size in pixels for CodeLens. When set to 0, 90% of `editor.fontSize` is used.
+"editor.codeLensFontSize": 3,
+
+// Controls the font family.
+"editor.fontFamily": "Ubuntu, 'Courier New', monospace",
+ // Controls the font size in pixels.
+ "editor.fontSize": 5
+
+}
