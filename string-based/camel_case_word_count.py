@@ -1,45 +1,43 @@
-"""
-There is a sequence of words in CamelCase as a string of letters, s, having the following properties:
+##############################################################################
+## Probem Statement: There is a sequence of words in CamelCase as a string of
+## letters, s, having the following properties:
+## 1. It is a concatenation of one or more words consisting of English letters.
+## 2. All letters in the first word are lowercase.
+## 3. For each of the subsequent words, the first letter is uppercase and rest
+## of the letters are lowercase.
+##############################################################################
 
-1. It is a concatenation of one or more words consisting of English letters.
-2. All letters in the first word are lowercase.
-3. For each of the subsequent words, the first letter is uppercase and rest of the letters are lowercase.
-
-Given s, determine the number of words in s.
-"""
 import re
 
 
-class CamelCaseWordCount:
-
-    """
-    Using the regex to solve the problem
-    """
-
-    @staticmethod
-    def using_regex(input_string):
-        expression = r"[A-Z][a-z]*"
-        words_with_capital_letters = len(re.findall(expression, input_string)) + 1
-        print(f"The total count of words -->{words_with_capital_letters}")
-
-    """
-    using the looping technique to find the same
-    """
-
-    @staticmethod
-    def using_loop_is_upper(input_string):
-        # Initialize all the word count to 1 for first small letter word
-        word_count = 1
-        for char in input_string:
-            if char.isupper():
-                word_count += 1
-        print(f"The total word count using loop and isupper()--> {word_count}")
+def word_count_using_regex(sentence):
+    total_words = 1
+    re_expression = r"[A-Z][a-z]*"
+    total_words = len(re.findall(re_expression, sentence)) + 1
+    print(re.findall(re_expression, sentence))
+    print(f"Word Count: {total_words}")
 
 
-"""
-Input data, function calls, etc
-"""
-in_str = "camelCaseStringExample"
+##############################################################################
 
-CamelCaseWordCount.using_regex(in_str)
-CamelCaseWordCount.using_regex(in_str)
+# input data
+input_data = "camelCaseWordExample"
+word_count_using_regex(input_data)
+
+
+##############################################################################
+## Second Way --> using for loop
+##############################################################################
+def word_count_using_loop(sentence):
+    total_words = 1
+    for word in sentence:
+        if word.isupper():
+            total_words += 1
+
+    print(f"Total words: {total_words}")
+
+
+##############################################################################
+# making function call
+input_data = "camelCaseWord"
+word_count_using_loop(input_data)

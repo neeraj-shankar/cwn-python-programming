@@ -1,5 +1,5 @@
 """
-Dec  Char                           Dec  Char     Dec  Char     Dec  Char
+Dec1  Char                           Dec2  Char     Dec3  Char     Dec  Char
 ---------                           ---------     ---------     ----------
   0  NUL (null)                      32  SPACE     64  @         96  `
   1  SOH (start of heading)          33  !         65  A         97  a

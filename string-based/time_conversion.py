@@ -1,5 +1,8 @@
 """
-Python program convert time from 12-hour format (12:00:00 PM) to 24-format ( 12:00:00)
+------------------------------------------------------------------------------
+Problem Statement: Converting time from 12-hour format (12:00:00 PM) to 
+24-format ( 12:00:00)
+------------------------------------------------------------------------------
 """
 
 from datetime import datetime

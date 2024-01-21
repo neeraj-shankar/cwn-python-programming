@@ -1,3 +1,18 @@
+"""
+-----------------------------------------------------------------------------------------
+Problem Statement: A numeric string, s, is beautiful if it can be split into a sequence
+of two or more positive integers, , satisfying the following conditions:
+
+1. a[i] - a[i-1]=1. for 1 < i <= n (i.e. Each Element in the sequence is 1 more than previous
+element)
+2. No a[i] contains a leading zero.
+3. The contents of the sequence cannot be rearranged.
+
+Example Input: "91011"
+Example Output: "9" + "10" + "11"
+"""
+
+
 def is_beautiful(s):
     n = len(s)
     
@@ -30,6 +45,6 @@ def is_beautiful(s):
     return "NO"
 
 # Example usage:
-numeric_string = "1234"
+numeric_string = "91011"
 result = is_beautiful(numeric_string)
 print(result)  # Output: "YES"

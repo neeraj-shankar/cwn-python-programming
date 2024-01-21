@@ -9,6 +9,7 @@ For example, in the string "aaabbbbccdd", the uniform contiguous substrings are 
 
 """
 
+
 def weighted_uniform_strings(s, queries):
     weights = set()
     current_char = s[0]

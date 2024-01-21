@@ -6,7 +6,7 @@ The Caesar cipher is a simple encryption technique that was used by Julius Caesa
 It works by shifting the letters in the plaintext message by a certain number of positions, known as the “shift” or “key”.
 
 Objective:
-Create a method that returns encrypted message based o raw message and shift factor given.
+Create a method that returns encrypted message based on raw message and shift factor given.
 
 Example Input:
 raw_message = "iamindelhi"
