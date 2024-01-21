@@ -3,16 +3,18 @@ Python program to demonstrate the various operations that can be performed using
 """
 
 
-class StackOperation:
-
+class Stack:
     # constructor method to initialize the list
     def __init__(self):
         self.stacked_list = []  # ---------------------------------------> O(1)
 
-    # Uses the stack_list initialized by the constructor
-    # Reverses the stack_list and returns each element on top of each
-    # This is done to achieve the demonstration of LIFO
     def __str__(self):
+        """
+        Uses the stack_list initialized by the constructor. Reverses the stack_list and returns each element on top of each.
+        This is done to achieve the demonstration of LIFO
+        :params None
+        :returns stacked_list in string format after reversing it. 
+        """
         values = self.stacked_list.reverse()
         values = [str(x) for x in self.stacked_list]
         return "\n".join(values)
@@ -35,7 +37,9 @@ class StackOperation:
         if self.is_empty():
             return f"There is no element in the stack. "
         else:
-            return self.stacked_list.pop()  # ---------------------------------------> O(1)/0(1)
+            return (
+                self.stacked_list.pop()
+            )  # ---------------------------------------> O(1)/0(1)
 
     # Checks if the stack is empty
     # if not empty find and return the top element of the stack
@@ -50,9 +54,9 @@ class StackOperation:
 """ 
 Creating StackOperation object, function calls, etc
 """
-stack_operation = StackOperation()
+stack_operation = Stack()
 
-# Pushing some elements to stack 
+# Pushing some elements to stack
 stack_operation.push(1)
 stack_operation.push(2)
 stack_operation.push(3)
