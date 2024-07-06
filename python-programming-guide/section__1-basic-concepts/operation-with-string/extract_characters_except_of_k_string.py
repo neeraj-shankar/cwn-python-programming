@@ -2,7 +2,6 @@
 Sometimes, while working with Python strings, we can have a problem in which we require to extract all the elements of
 string except those which present in a substring.
 """
-from format_output  import use_case_separator
 
 
 class CharacterExtraction:
@@ -39,9 +38,7 @@ create object and function calls
 test_obj = CharacterExtraction()
 
 # calling first way of extracting characters
-use_case_separator()
 test_obj.extract_using_loop_way()
 
 # second way to achieve the same
-use_case_separator()
 test_obj.extract_using_set()
