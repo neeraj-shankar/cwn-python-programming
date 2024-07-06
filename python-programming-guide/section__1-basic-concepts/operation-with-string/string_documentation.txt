@@ -1,0 +1,52 @@
+What is string python?
+-----------------------------------------------------------------------------------------------------------------------
+A string is a data structure in Python that represents a sequence of characters. It is an immutable data type, meaning
+that once you have created a string, you cannot change it.
+
+Python does not have a character data type, a single character is simply a string with a length of 1. Square brackets
+can be used to access elements of the string.
+
+Creating a String in Python
+-----------------------------------------------------------------------------------------------------------------------
+Strings in Python can be created using single quotes or double quotes or even triple quotes.
+
+example
+-------------------
+'i am string' or "i am string" or ''' I am string '''
+
+
+Accessing characters in Python String
+-----------------------------------------------------------------------------------------------------------------------
+In Python, individual characters of a String can be accessed by using the method of Indexing.
+
+Indexing allows negative address references to access characters from the back of the String, e.g. -1 refers to the
+last character, -2 refers to the second last character, and so on.
+
+While accessing an index out of the range will cause an IndexError. Only Integers are allowed to be passed as an index,
+float or other types that will cause a TypeError.
+
+
+Reversing a Python String
+----------------------------------------------------------------------------------------------------------------------
+1. With Accessing Characters from a string, we can also reverse them. We can Reverse a string by writing [::-1]
+and the string will be reversed.
+
+2. We can also reverse a string by using built-in join and reversed function.
+example --> reversed_string = "".join(reversed("neeraj")
+
+
+String Slicing
+-----------------------------------------------------------------------------------------------------------------------
+examples
+------------------------------
+1. slicing from index=3 to index=11 --> string_name[3:12]
+2. characters between index=3 and second index from end (-2) --> string_name[3:-2]
+
+Deleting/Updating from a String
+-----------------------------------------------------------------------------------------------------------------------
+In Python, the Updation or deletion of characters from a String is not allowed. This will cause an error because item
+assignment or item deletion from a String is not supported.
+
+Although deletion of the entire String is possible with the use of a built-in del keyword. This is because Strings are
+immutable, hence elements of a String cannot be changed once it has been assigned. Only new strings can be reassigned
+to the same name.

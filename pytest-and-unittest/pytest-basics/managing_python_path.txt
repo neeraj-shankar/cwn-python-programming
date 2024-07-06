@@ -1,0 +1,30 @@
+Reference: https://pytest-django.readthedocs.io/en/latest/managing_python_path.html
+
+Managing the Python path
+-----------------------------------------------------------------------------------------------------------------------
+Normally, when interacting with Django code, the interaction happens via manage.py, which will implicitly add that
+directory to the Python path.
+
+However, when Python is started via the pytest command. There are two options
+
+1. Automatic looking for Django projects
+-----------------------------------------------------------------------------------------
+By default, pytest-django tries to find Django projects by automatically looking for the project’s manage.py file
+and adding its directory to the Python path.
+
+Managing the Python path explicitly
+-----------------------------------------------------------------------------------------
+First, disable the automatic Django project finder.
+
+Example: pytest.ini or setup.cfg, or tox.ini
+-----------------------------------------------------------
+[pytest]
+django_find_project = false
+
+Next, you need to make sure that your project code is available on the Python path. There are multiple ways to achieve
+this:
+
+1. Managing your project with virtualenv, pip and editable mode
+------------------------------------------------------------
+
+

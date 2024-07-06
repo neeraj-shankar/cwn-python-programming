@@ -1,0 +1,33 @@
+Python Handle Precision with Math Module
+-----------------------------------------------------------------------------------------------------------------------
+1. trunc() – This function is used to eliminate all decimal parts of the floating-point number and return the integer
+          without the decimal part.
+
+2. ceil() – This function is used to print the least integer greater than the given number.
+
+3. floor() – This function is used to print the greatest integer smaller than the given integer.
+
+
+How to handle the precision using decimal module
+-----------------------------------------------------------------------------------------------------------------------
+
+1. Using % – The % operator is used to format as well as set precision in Python. This is similar to “printf” statement
+             in C programming.
+Syntax
+-----------------------------------------------------------
+print("%.2f" % given_number) --> It rounds to two decimal places
+
+2. Using format() – This is yet another way to format the string for setting precision.
+Syntax
+-----------------------------------------------------------
+print("{0:.3f}".format(a)) --> till 3 decimal places
+
+
+3. Using round(x,n) – This function takes 2 arguments, number, and the number till which we want the decimal part rounded.
+Example
+-----------------------------------------------------------
+print(round(a, 2)) --> Round number a to 2 decimal places
+
+4. Using f-string – PEP 498 introduced a new string formatting mechanism known as Literal String Interpolation or
+   more commonly as F-strings
+   

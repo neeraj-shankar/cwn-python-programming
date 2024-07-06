@@ -1,0 +1,70 @@
+Reference: https://pytest-django.readthedocs.io/en/latest/configuring_django.html#the-environment-variable-django-settings-module
+
+Configuring Django settings
+-----------------------------------------------------------------------------------------------------------------------
+There are a couple of different ways Django settings can be provided for the tests.
+
+1. Running the tests with DJANGO_SETTINGS_MODULE defined will find the Django settings the same way Django does
+   by default.
+Example
+-----------------------------------------------------------------------------------------
+1. before running the test use --> export DJANGO_SETTINGS_MODULE=app_name.settings
+2. pytest
+
+2. Command line option
+-----------------------------------------------------------------------------------------
+Example: pytest --ds=app_name.settings
+
+3. pytest.ini Option
+-----------------------------------------------------------------------------------------
+Example contents of pytest.ini:
+-----------------------------------------------------------
+[pytest]
+DJANGO_SETTINGS_MODULE = app_name.settings
+
+4. pyproject.toml Option
+-----------------------------------------------------------------------------------------
+Example contents of pyproject.toml:
+-----------------------------------------------------------
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "app_name.settings"
+
+
+Order of choosing settings
+-----------------------------------------------------------------------------------------
+The order of precedence is, from highest to lowest:
+
+1. The command line option --ds
+2. The environment variable DJANGO_SETTINGS_MODULE
+3. The DJANGO_SETTINGS_MODULE option in the configuration file - pytest.ini, or other file that Pytest finds such as
+   tox.ini or pyproject.toml
+
+
+Using django-configurations
+-----------------------------------------------------------------------------------------------------------------------
+There is support for using django-configurations. To do so configure the settings class using an environment variable,
+
+1. Environment Variable:
+-----------------------------------------------------------------------------------------
+1. export DJANGO_SETTINGS_MODULE=MySettings
+2. pytest
+
+2. Command line option
+-----------------------------------------------------------------------------------------
+Example: pytest --dc=MySettings
+
+3. pytest.ini Option
+-----------------------------------------------------------------------------------------
+Example contents of pytest.ini:
+-----------------------------------------------------------
+[pytest]
+DJANGO_SETTINGS_MODULE=MySettings
+
+4. pyproject.toml Option
+-----------------------------------------------------------------------------------------
+Example contents of pyproject.toml:
+-----------------------------------------------------------
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "MySettings"
+
+
