@@ -97,6 +97,29 @@ class StringPracticeSet:
 
         print(f"Palindromes: {is_palindrome_list}")
 
+    
+    @staticmethod
+    def are_angrams_using_sort():
+
+        """
+        Takes two strings into account, sort them out and print if both are angram to each other
+        Time Complexity: 0(n)
+        Space Complexity: 0(n)
+        
+        """
+
+        str1 = "listen"
+        str2 = "silent"
+
+        # Remove all white spaces if contains and change to lower case.
+        cleaned_str1 = str1.replace(" ", "").lower()
+        cleaned_str2 = str2.replace(" ", "").lower()
+
+        print(f"Are the given strings Angrams? {sorted(cleaned_str1) == sorted(cleaned_str2)}")
+
+
+
+
 
 if __name__ == "__main__":
 
@@ -108,3 +131,6 @@ if __name__ == "__main__":
 
     # Testing check_palindrome() method
     stringPracticeSet.check_palindrome()
+
+    # Testing are_angrams_using_sort() method
+    stringPracticeSet.are_angrams_using_sort()
