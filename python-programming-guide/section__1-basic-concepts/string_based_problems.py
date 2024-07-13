@@ -117,7 +117,38 @@ class StringPracticeSet:
 
         print(f"Are the given strings Angrams? {sorted(cleaned_str1) == sorted(cleaned_str2)}")
 
+    @staticmethod
+    def find_characters_frequency():
+        """
+        Takes the string or a phrase and count the occurence of each chaaracter appearing and
+        prints in the console.
 
+        Time Complexity: O(n)
+        Space Complexity: O(1)
+        """
+
+        input_string = "i am neeraj shankar @ !!!"
+        cleaned_string = re.sub(r'[^A-Za-z0-9]', '', input_string)
+
+        # Using Dictionary to store characters count
+        char_counter = {}
+
+        for chr in cleaned_string:
+            char_counter[chr] = char_counter.get(chr, 0) + 1
+
+        print(char_counter)
+
+        # character with max count
+        max_count = 0
+        for k, v in char_counter.items():
+            if v > max_count:
+                max_count = v
+
+        # Find the character with the maximum count
+        max_char = max(char_counter, key=char_counter.get)
+
+        print(f"The charatcer occuring maximum number of time: {max_char} and count is: {char_counter[max_char]}")
+        # The charatcer occuring maximum number of time: a and count is: 4
 
 
 
@@ -134,3 +165,6 @@ if __name__ == "__main__":
 
     # Testing are_angrams_using_sort() method
     stringPracticeSet.are_angrams_using_sort()
+
+    # Testing find_characters_frequency() 
+    stringPracticeSet.find_characters_frequency()
