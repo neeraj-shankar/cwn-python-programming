@@ -166,3 +166,180 @@ class Dog:
         return f"Dog named {self.name}"
 
 ```
+
+# FAQs
+
+## 1. What is the difference between instance variables and class variables in OOP?
+
+### Instance Variables
+- **Scope:** Instance variables are specific to each instance of a class. This means that each object (instance) of the class has its own separate copy of instance variables.
+
+- **Declaration:** They are usually declared within methods (typically within the __init__ method) and are prefixed with self in Python to denote that they belong to the object instance.
+
+- **Usage:** Instance variables are used to store data that is unique to each object. For example, if you have a Dog class, each Dog object might have a different name and age, which would be stored as instance variables.
+
+- **Lifetime:** The lifetime of instance variables is tied to the lifetime of the object instance. When the object is destroyed, the instance variables are also reclaimed by the system.
+
+### Class Variables:
+
+- **Scope:** Class variables are shared across all instances of a class. They are the same for every instance.
+
+- **Declaration:** They are declared within the class body but outside any instance methods. In Python, class variables are not prefixed with self.
+
+- **Usage:** Class variables are used to store data that is common to all instances of the class. For example, if all dogs of the Dog class are mammals, you might have a class variable species set to "mammal".
+
+- **Lifetime:** The lifetime of class variables is tied to the lifetime of the class definition, not to any single object. They exist as long as the class exists in the runtime environment.
+
+## Can you explain what a static variable is and when you would use it?
+
+### Characteristics of Static Variables:
+- **Shared Value:** The value of a static variable is shared across all instances of the class. If the value is changed in one instance, it changes for all instances.
+
+- **Memory Efficiency:** Since there is only one copy of a static variable, regardless of how many instances of the class exist, it is more memory-efficient for data that is common to all instances.
+
+- **Class-level Scope:** Static variables can be accessed directly through the class itself, without creating an instance of the class.
+
+### When to Use Static Variables:
+
+- **Common Property:** When a property is common to all instances of a class and should have the same value for each instance, a static variable is appropriate. For example, if all instances of a Person class should have the same species, you could use a static variable to store "Homo sapiens".
+
+- **Configuration Data:** Static variables can be used to store configuration data that needs to be shared across all instances, such as application-wide settings.
+
+- **Counting Instances:** If you need to keep track of the number of instances of a class that have been created, you can use a static variable as a counter that is incremented in the class constructor.
+
+- **Utility Values:** Static variables can be used for values that are used by static methods, such as constants or lookup tables that are relevant to the class as a whole.
+
+```sh
+class Person:
+    species = "Homo sapiens"  # Static (class) variable
+
+    def __init__(self, name):
+        self.name = name  # Instance variable
+
+# Accessing the static variable without creating an instance
+print(Person.species)  # Output: Homo sapiens
+
+# Changing the static variable affects all instances
+Person.species = "Homo neanderthalensis"
+print(Person.species)  # Output: Homo neanderthalensis
+
+# All instances share the same static variable
+person1 = Person("Alice")
+person2 = Person("Bob")
+print(person1.species)  # Output: Homo neanderthalensis
+print(person2.species)  # Output: Homo neanderthalensis
+
+```
+
+## How would you make a variable private in a Python class, and why might you want to do this?
+
+### Why Make a Variable Private?
+
+- **Encapsulation:** Encapsulation is a core principle of OOP. It involves bundling the data with the methods that operate on that data. By making variables private, you can hide their values and prevent external interference and misuse.
+
+- **Control Access:** By making a variable private, you can control access to its value through methods (getters and setters), which can include additional logic for validation, logging, or other purposes.
+
+- **Reduce Dependency:** If other parts of your codebase rely on a variable, changes to that variable can have widespread implications. Making a variable private helps to reduce this dependency and allows you to change the implementation without affecting external code.
+
+- **Maintain Integrity:** Private variables can be used to maintain the integrity of the internal state of the object by preventing external code from setting the variables to invalid or inconsistent values.
+
+- **Implementation Details:** Private variables can be used to hide implementation details from the user, allowing the developer to change these details without affecting the users of the class.
+
+### Making a variable private
+
+- We can make a variable "private" by prefixing its name with two underscores (__). This triggers name mangling, where the interpreter changes the name of the variable in a way that makes it harder to access from outside the class.
+
+```sh 
+class MyClass:
+    def __init__(self):
+        self.__private_variable = "I am private"
+
+    def get_private_variable(self):
+        return self.__private_variable
+```
+- It is not truly private, as Python does not enforce strict encapsulation, but the double underscores signal that it is intended for internal use within the class only
+- The name mangling converts __private_variable to _MyClass__private_variable, which can still be accessed if you know the mangled name, but this is strongly discouraged as it breaks encapsulation and the intended use of the variable.
+
+### Accessing Private Variables
+
+```sh
+obj = MyClass()
+print(obj._MyClass__private_variable)  # Accessing the private variable (not recommended)
+```
+
+## In the context of OOP, what is encapsulation, and how does it relate to the concept of private and public variables?
+
+- **Encapsulation** is a fundamental concept in object-oriented programming (OOP) that refers to the bundling of data with the methods that operate on that data. It restricts direct access to some of an object's components, which is a means of preventing accidental interference and misuse of the internal workings of an object.
+
+- **Encapsulation** is often achieved through the use of access modifiers, which control the visibility of class members (variables and methods)
+
+### Public Variables:
+
+- **Accessibility:** Public variables can be accessed from anywhere—inside the class, from its subclasses, and from other classes.
+
+- **Usage:** They are intended to be directly accessible without any restrictions. This is suitable for properties that do not require any special behavior or validation upon being read or written.
+
+
+### Private Variables:
+
+- **Accessibility:** Private variables are intended to be accessed only within the class that defines them. They are not accessible directly from outside the class.
+
+- **Usage:** They are used to hide the internal state of an object from the outside. This is useful when you need to validate data before setting a value or if changing the value directly could leave the object in an inconsistent state.
+
+### Encapsulation in Practice:
+
+
+- **Getter and Setter Methods:** Encapsulation is often implemented using getter and setter methods (also known as accessors and mutators). These methods allow for controlled access to private variables. The getter method returns the value of the private variable, and the setter method allows you to set the value while potentially enforcing some constraints or triggering side effects.
+
+- **Data Hiding:** Encapsulation is a form of data hiding. By making variables private, you hide their values and prevent external code from directly modifying them. This allows the internal representation of the object to be changed without affecting external code that relies on the object.
+
+- **Controlled Access:** Encapsulation provides a controlled interface to the internal workings of the class. This means that you can change the internal implementation without changing how the class is used by other code.
+
+```sh 
+class BankAccount:
+    def __init__(self, initial_balance):
+        self.__balance = initial_balance  # Private variable
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+
+    def get_balance(self):  # Getter method
+        return self.__balance
+```
+
+## What is an instance method, and how does it differ from a static method in a class?
+
+### Binding:
+
+- **Instance** methods are bound to an instance of the class and can access and modify the object's state.
+
+- **Static** methods are bound to the class itself and cannot access or modify instance-specific data.
+
+### Parameters:
+
+- **Instance** methods automatically take self as the first parameter, which refers to the instance calling the method.
+
+- **Static** methods do not take self or any other instance-specific parameters.
+
+## Usage:
+
+- **Instance** methods are used when you need to access or modify the state of a particular object.
+
+- **Static** methods are used when you need a function that is logically related to the class but does not need to access or modify the class or its instances.
+
+### Calling:
+
+- **Instance** methods are called on an instance of the class: instance.instance_method().
+
+- **Static** methods can be called on the class itself or on an instance, but they behave the same way in both cases: MyClass.static_method() or instance.static_method().
+
+### Decorator:
+
+- **Instance** methods do not require any special decorator.
+
+- **Static** methods require the @staticmethod decorator to indicate that they do not depend on the state of an instance.
