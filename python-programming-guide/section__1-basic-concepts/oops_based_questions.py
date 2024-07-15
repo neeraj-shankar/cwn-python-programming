@@ -80,3 +80,6 @@ server2 = Server("192.168.1.2", timeout=45)
 # Access the instance variable
 print(f"Server1 timeout: {server1.timeout}")  # Output: Server1 timeout: 30
 print(f"Server2 timeout: {server2.timeout}")  # Output: Server2 timeout: 45
+
+
+# 
