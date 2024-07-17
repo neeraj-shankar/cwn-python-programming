@@ -134,3 +134,163 @@ obj.method()
 4. **Performance**: There can be a performance penalty due to the additional layers of wrapping, especially if a large number of decorators are applied.
 
 5. **Excessive Use**: Overuse of decorators can lead to a scenario where the simplicity and readability of the code are compromised.
+
+
+## Context Mananger in Python
+- **Context manager** is a construct that provides a convenient way to manage resources such as file streams, database connections, or locks, ensuring that they are properly cleaned up after use, regardless of whether an error occurred during their use.
+
+```python
+with open('example.txt', 'r') as file:
+    data = file.read()
+    # Perform operations on the data
+# The file is automatically closed here, outside the 'with' block
+```
+
+### Creating Context Managers
+
+There are two ways to create a context manager in Python:
+
+#### By using a class that implements the context management protocol: 
+- This requires defining two special methods in the class, __enter__() and __exit__(). 
+- The __enter__() method is called at the beginning of the with block, and its return value is bound to the target of the with statement if there is one. 
+- The __exit__() method is called at the end of the with block and is responsible for cleaning up resources.
+
+```python
+class MyContextManager:
+    def __enter__(self):
+        print('Entering the context')
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        print('Exiting the context')
+        # Handle exceptions if necessary
+        # Return False to propagate exceptions, True to suppress them
+
+with MyContextManager() as manager:
+    print('Inside the with block')
+```
+
+#### By using the contextlib module: 
+- The contextlib module provides utilities for working with context managers and the with statement. 
+- One of the most useful tools is the contextlib.contextmanager decorator, which allows you to create a context manager using a generator function.
+
+```python
+from contextlib import contextmanager
+
+@contextmanager
+def my_context_manager():
+    print('Entering the context')
+    try:
+        yield
+    finally:
+        print('Exiting the context')
+
+with my_context_manager():
+    print('Inside the with block')
+```
+- In the generator function decorated with @contextmanager, everything before the yield statement is considered the setup code and is executed before entering the with block.
+- The code following the yield is the teardown code and is executed after the with block, even if an exception occurs.
+
+### Benefits of Context Managers
+
+- **Resource Management:** Context managers ensure that resources are properly acquired and released, which helps prevent resource leaks.
+- **Exception Handling:** They simplify exception handling by encapsulating standard uses of try/finally blocks.
+-  **Code Clarity:** Using context managers can make the code clearer and more readable by highlighting the scope in which a resource is used.
+- Context managers are a powerful feature in Python that promote writing cleaner and more reliable resource management code.
+
+# FAQs
+
+## How can you use a context manager to ensure that multiple files are closed properly after processing them?
+- To ensure that multiple files are closed properly after processing them, we can use the contextlib module's ExitStack class, which is designed to handle multiple context managers. 
+- The ExitStack class allows us to enter a variable number of context managers and will ensure that all of them are exited properly, even if exceptions occur.
+
+```python
+from contextlib import ExitStack
+
+# List of file paths to open
+file_paths = ['file1.txt', 'file2.txt', 'file3.txt']
+
+# Using ExitStack to open and process multiple files
+with ExitStack() as stack:
+    files = [stack.enter_context(open(file_path, 'r')) for file_path in file_paths]
+    
+    # Now all files are opened and will be closed properly when the block exits
+    for file in files:
+        # Process each file
+        data = file.read()
+        print(f"Contents of {file.name}:")
+        print(data)
+        # You can perform any file operations here
+
+# After the with block, all files are guaranteed to be closed, even if an exception occurred
+```
+- We are calling stack.enter_context() for each file we want to open, which registers the file object's __exit__ method to be called when the with block is exited. The enter_context() method returns the file object, which we collect into the files list.
+
+
+## How would you debug an issue within a context manager?
+
+- **Understand the Context Manager Protocol:** Familiarize yourself with the __enter__ and __exit__ methods of the context manager protocol. Understanding how these methods work will help you identify where the issue might be occurring.
+
+- **Use Logging:** Add logging statements inside the __enter__ and __exit__ methods to track the flow of execution and capture the state of important variables. This can help you understand if the context manager is being entered and exited as expected.
+
+- **Exception Handling:** Make sure that exceptions within the __enter__ and __exit__ methods are being handled properly. You can log exceptions or use a debugger to inspect the exception details.
+
+- **Check Resource Management:** Ensure that resources (like file handles or database connections) are being managed correctly. Resources should be acquired in the __enter__ method and released or cleaned up in the __exit__ method.
+
+- **Use a Debugger:** Set breakpoints inside the __enter__ and __exit__ methods to step through the code and inspect variables at runtime. This can help you identify logical errors or unexpected behavior.
+
+- **Unit Tests:** Write unit tests for your context manager to test its behavior in different scenarios. This can help you isolate the issue and ensure that your context manager works as intended.
+
+- **Simplify the Code:** Temporarily simplify the code within the with block to the minimum needed to reproduce the issue. This can help eliminate other factors that might be causing the problem.
+
+- **Check the Stack Trace:** If an exception is raised, carefully examine the stack trace. It can provide clues about where the error occurred and which line of code caused it.
+
+- **Review the Exit Conditions:** The __exit__ method receives three arguments related to the exception (exc_type, exc_value, and traceback). Check if these are being used correctly to handle exceptions and control whether the exception should be suppressed or propagated.
+
+- **Manual Resource Cleanup:** As a last resort, if you suspect the context manager is not cleaning up resources properly, you can manually clean up the resources outside the context manager to see if that resolves the issue.
+
+
+## How would you extend a context manager to support asynchronous operations with `async with`?
+- To extend a context manager to support asynchronous operations, you need to implement an asynchronous context manager. 
+- This involves defining the __aenter__ and __aexit__ asynchronous methods, which are the asynchronous equivalents of the __enter__ and __exit__ methods used in a regular context manager.
+
+```python
+import asyncio
+
+class AsyncContextManager:
+    async def __aenter__(self):
+        # Asynchronously acquire resources
+        print("Entering the asynchronous context manager.")
+        return self
+
+    async def __aexit__(self, exc_type, exc_value, traceback):
+        # Asynchronously release resources
+        print("Exiting the asynchronous context manager.")
+        # Handle exceptions if necessary
+        if exc_type:
+            print(f"An exception occurred: {exc_value}")
+        # Return False to propagate the exception, True to suppress it
+        return False
+
+# Usage example
+async def main():
+    async with AsyncContextManager() as acm:
+        # Perform asynchronous operations
+        print("Inside the asynchronous context manager.")
+
+# Run the main coroutine
+asyncio.run(main())
+```
+
+
+## How does a context manager handle exceptions that occur inside the `with` block?
+
+- A context manager is designed to handle exceptions that occur inside the with block using its __exit__ method. 
+
+- The __exit__ method is called when the block of code inside the with statement is exited, whether the exit occurs because the block of code ran successfully or because an exception was raised.
+
+- The __exit__ method has three parameters that are specifically related to exception handling:
+
+**exc_type:** The type of the exception that was raised (e.g., ValueError), or None if no exception was raised.
+**exc_value:** The exception instance that was raised, or None if no exception was raised.
+**traceback:** A traceback object that represents the point in the code where the exception was raised, or None if no exception was raised.
