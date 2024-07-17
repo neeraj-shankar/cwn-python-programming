@@ -343,3 +343,84 @@ class BankAccount:
 - **Instance** methods do not require any special decorator.
 
 - **Static** methods require the @staticmethod decorator to indicate that they do not depend on the state of an instance.
+
+## How do you define a read-only property in a Python class?
+
+- In Python, you can define a read-only property using the property decorator. 
+- This allows you to create a property that can be accessed but not modified. 
+
+- Here's how you can define a read-only property:
+
+```python
+class MyClass:
+    def __init__(self, value):
+        self._value = value  # Note the use of a single underscore to indicate "protected" attribute
+
+    @property
+    def value(self):
+        return self._value
+
+```
+
+## Can you explain what a class method is and provide a use case for it?
+- A class method is a method that is bound to the class and not the instance of the class. 
+- It can modify a class state that would apply across all the instances of the class. 
+- Class methods take a reference to the class, typically named cls, as their first argument. They can be called on the class itself or on instances of the class.
+
+### Use Case: Factory Methods
+- One common use case for class methods is to define factory methods, which are alternative constructors for a class. Factory methods can create class instances using different parameters than those defined in the class's __init__ method.
+
+```python
+class Date:
+    def __init__(self, day=0, month=0, year=0):
+        self.day = day
+        self.month = month
+        self.year = year
+
+    @classmethod
+    def from_string(cls, date_as_string):
+        day, month, year = map(int, date_as_string.split('-'))
+        return cls(day, month, year)
+
+# Create a Date object using the primary constructor
+date1 = Date(12, 9, 2022)
+
+# Create a Date object using the factory method
+date2 = Date.from_string('12-9-2022')
+
+print(date1.day)  # Outputs: 12
+print(date2.day)  # Outputs: 12
+```
+
+### Use Case: Modifying Class State
+
+- Class methods can also be used to modify the class state, which would then be reflected across all instances of the class.
+
+```python
+class Employee:
+    raise_amount = 1.04  # A 4% raise
+
+    def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+
+    def apply_raise(self):
+        self.salary *= self.raise_amount
+
+    @classmethod
+    def set_raise_amount(cls, amount):
+        cls.raise_amount = amount
+
+# Set the raise amount for all instances of Employee
+Employee.set_raise_amount(1.05)
+
+emp1 = Employee('John', 50000)
+emp2 = Employee('Jane', 60000)
+
+# Apply the new raise amount through the instance method
+emp1.apply_raise()
+emp2.apply_raise()
+
+print(emp1.salary)  # Outputs: 52500.0
+print(emp2.salary)  # Outputs: 63000.0
+```
