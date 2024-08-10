@@ -1,3 +1,5 @@
+import re
+
 class AlternateStringProblem:
     """
     A class to solve the problem of common problems which are based on the strings in python programming.
@@ -163,7 +165,8 @@ class AlternateStringProblem:
 
     def caeser_encryption_generator(input_data, shift_factor):
         """
-        This method uses a generator function to produce each character of the encrypted string one at a time, which can be useful for handling large strings or streaming data.
+        This method uses a generator function to produce each character of the encrypted string one at a time, 
+        which can be useful for handling large strings or streaming data.
 
         Parameters
         ----------
@@ -369,6 +372,118 @@ class AlternateStringProblem:
         # Append the count and the last character to the result
         result += f"{count}{current_char}"
         return result
+
+    def word_count_using_regex(sentence):
+        """
+        Calculate the number of words in a sentence using a regular expression.
+
+        This function uses a regular expression to find words in a given sentence.
+        A word is defined as a sequence of characters starting with an uppercase letter
+        followed by zero or more lowercase letters. The function prints the list of words
+        found and the total word count.
+
+        Parameters:
+        sentence (str): The input sentence to be evaluated.
+
+        Returns:
+        int: The total number of words in the sentence.
+
+        Time Complexity: O(n), where n is the length of the input sentence.
+        Space Complexity: O(w), where w is the number of words found in the sentence.
+
+        Example Usage:
+        >>> sentence = "Hello World This Is A Test"
+        >>> word_count_using_regex(sentence)
+        ['Hello', 'World', 'This', 'Is', 'A', 'Test']
+        Word Count: 6
+        """
+
+        # Initialize the total word count
+        total_words = 1
+
+        # Define the regular expression to match words starting with an uppercase letter
+        re_expression = r"[A-Z][a-z]*"
+
+        # Find all words in the sentence that match the regular expression
+        words = re.findall(re_expression, sentence)
+
+        # Calculate the total number of words
+        total_words = len(words)
+
+        # Print the list of words found
+        print(words)
+
+        # Print the total word count
+        print(f"Word Count: {total_words}")
+
+        # Return the total word count
+        return total_words
+
+
+    def validate_strong_password(n, password):
+        """
+        Validate the strength of a password based on specific criteria.
+
+        This method checks if a password meets the following criteria:
+        1. Its length is at least 6 characters.
+        2. It contains at least one digit.
+        3. It contains at least one lowercase English character.
+        4. It contains at least one uppercase English character.
+        5. It contains at least one special character.
+
+        Parameters:
+        n (int): The length of the password.
+        password (str): The password to be validated.
+
+        Returns:
+        int: The number of additional characters needed to make the password strong.
+
+        Time Complexity: O(n), where n is the length of the password.
+        Space Complexity: O(1), as the space used does not depend on the input size.
+
+        Example Usage:
+        >>> PasswordValidator.validate_strong_password(5, "Ab1!")
+        2
+        """
+
+        # Initialize the count of different character types
+        character_count = {
+            "special_char": 0,
+            "digit_char": 0,
+            "capital_char": 0,
+            "small_char": 0,
+        }
+
+        # Calculate the number of characters needed to reach the minimum length of 6
+        required_char_count = max(0, 6 - n)
+        missing_char_count = 0
+
+        # Iterate through each character in the password
+        for char in password:
+            print(f"The char in iteration --> {char}")
+            if char.isdigit():
+                character_count["digit_char"] += 1
+            elif char.isupper():
+                character_count["capital_char"] += 1
+            elif char.islower():
+                character_count["small_char"] += 1
+            elif not char.isalnum():
+                character_count["special_char"] += 1
+
+        # Count the number of missing character types
+        for val in character_count.values():
+            if val == 0:
+                print(f"the item value --> {val}")
+                print(f"Missing char count  --> {missing_char_count}")
+                missing_char_count += 1
+
+        print(f"the required count --> {required_char_count}")
+        print(f"The missing char count --> {missing_char_count}")
+        print(f"the dictionary data--> {character_count}")
+
+        # Return the maximum of required characters to reach length 6 or missing character types
+        return max(required_char_count, missing_char_count)
+
 
 
 if __name__ == "__main__":
