@@ -246,6 +246,130 @@ class AlternateStringProblem:
         else:
             return "NOT FUNNY"
 
+    def super_reduced_string(s: str) -> str:
+        """
+        Reduce the input string by removing pairs of adjacent matching characters.
+        If the resulting string is empty, return "Empty String".
+
+        Args:
+            s (str): The input string to process.
+
+        Returns:
+            str: The reduced string or "Empty String" if the reduced string is empty.
+
+        Example:
+            >>> super_reduced_string("aaabccddd")
+            'abd'
+            >>> super_reduced_string("aa")
+            'Empty String'
+
+        Time Complexity:
+            O(n): The function processes each character in the input string once.
+
+        Space Complexity:
+            O(n): The function uses a stack to store characters, which in the worst case can be as large as the input string.
+
+        """
+        char_stack = []
+
+        for char in s:
+            # Check if char_stack is not empty and the top value matches the current char
+            # If matched, pop that character (remove the pair)
+            if char_stack and char_stack[-1] == char:
+                char_stack.pop()
+            # Else, add the current char to the stack
+            else:
+                char_stack.append(char)
+
+        # Fetch each char from char_stack and join them as a single string
+        reduced_string = "".join(char_stack)
+
+        # Return reduced_string if it is not empty, else return "Empty String"
+        return reduced_string if reduced_string else "Empty String"
+
+    def reverse_string_index_based(input_string: list, left: int, right: int) -> None:
+        """
+        Reverse the elements of the input list between the indices left and right (inclusive).
+
+        Args:
+            input_string (list): The list of characters to be reversed.
+            left (int): The starting index of the section to be reversed.
+            right (int): The ending index of the section to be reversed.
+
+        Returns:
+            None: This function modifies the input list in place and does not return a value.
+
+        Example:
+            >>> input_string = ['a', 'b', 'c', 'd', 'e']
+            >>> rev(input_string, 1, 3)
+            >>> input_string
+            ['a', 'd', 'c', 'b', 'e']
+
+        Time Complexity:
+            O(n): Where n is the number of elements between left and right indices.
+            Each element in this range is swapped once.
+
+        Space Complexity:
+            O(1): The function uses a constant amount of extra space.
+        """
+        # Loop until the left index is less than the right index
+        while left < right:
+            # Swap the elements at the left and right indices
+            temp = input_string[left]
+            input_string[left] = input_string[right]
+            input_string[right] = temp
+            # Move the left index one step to the right
+            left += 1
+            # Move the right index one step to the left
+            right -= 1
+
+    def generate_character_count(input_string: str) -> str:
+        """
+        Generate a character count string where each character is followed by the number of times it appears consecutively in the input string.
+
+        Args:
+            input_string (str): The input string to process.
+
+        Returns:
+            str: A string representing the character count where each character is followed by the number of times it appears consecutively.
+
+        Example:
+            >>> generate_character_count("aaabbc")
+            '3a2b1c'
+            >>> generate_character_count("aabccc")
+            '2a1b3c'
+
+        Time Complexity:
+            O(n): Where n is the length of the input string. The function processes each character once.
+
+        Space Complexity:
+            O(n): The resulting string can be as long as twice the input string in the worst case (when all characters are unique).
+
+        """
+        # Check if the input string is empty
+        if not input_string:
+            return ""
+
+        result = ""
+        current_char = input_string[0]  # Initialize the current character
+        count = 1  # Initialize the count of the current character
+
+        # Iterate through the string starting from the second character
+        for char in input_string[1:]:
+            if char == current_char:
+                # If the current character is the same as the previous one, increment the count
+                count += 1
+            else:
+                # Append the count and the current character to the result
+                result += f"{count}{current_char}"
+                # Update the current character and reset the count
+                current_char = char
+                count = 1
+
+        # Append the count and the last character to the result
+        result += f"{count}{current_char}"
+        return result
+
 
 if __name__ == "__main__":
     input_string = "AAABBB"
