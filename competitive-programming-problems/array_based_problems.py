@@ -196,4 +196,59 @@ class ArrayBasedProblemSet:
 
         # Return the maximum area found
         return max_area
+    
 
+    def birthday_chocolate(chocolate_bar, month, date):
+        """
+        Calculate the number of ways to divide the chocolate bar into segments that sum to a given date.
+
+        This function iterates through the chocolate bar and checks each segment of length `month`
+        to see if the sum of the segment equals the given `date`. It counts the number of such segments.
+
+        Parameters:
+        chocolate_bar (list): A list of integers representing the chocolate bar, where each integer is a piece of chocolate.
+        month (int): The length of the segment to be considered.
+        date (int): The target sum of the segment.
+
+        Returns:
+        int: The count of segments whose sum equals the given date.
+
+        Time Complexity: O(n * m), where n is the length of the chocolate bar and m is the segment length.
+        Space Complexity: O(1), as the space used does not depend on the input size.
+
+        Example Usage:
+        >>> chocolate_bar = [1, 2, 1, 3, 2]
+        >>> month = 2
+        >>> date = 3
+        >>> birthday_chocolate(chocolate_bar, month, date)
+        2
+
+        >>> chocolate_bar = [1, 1, 1, 1, 1, 1]
+        >>> month = 2
+        >>> date = 2
+        >>> birthday_chocolate(chocolate_bar, month, date)
+        5
+
+        >>> chocolate_bar = [4]
+        >>> month = 1
+        >>> date = 4
+        >>> birthday_chocolate(chocolate_bar, month, date)
+        1
+        """
+
+        # Initialize the count of valid segments
+        count = 0
+
+        # Iterate through the chocolate bar to check each segment of length 'month'
+        for i in range(0, len(chocolate_bar) - month + 1):
+            # Extract the segment of length 'month' starting at index 'i'
+            segment = chocolate_bar[i : i + month]
+            print(f"Segment: {segment}")
+
+            # Check if the sum of the segment equals the given date
+            if sum(segment) == date:
+                # Increment the count if the segment sum matches the date
+                count += 1
+
+        # Return the count of valid segments
+        return count
