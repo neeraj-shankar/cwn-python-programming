@@ -294,3 +294,143 @@ asyncio.run(main())
 **exc_type:** The type of the exception that was raised (e.g., ValueError), or None if no exception was raised.
 **exc_value:** The exception instance that was raised, or None if no exception was raised.
 **traceback:** A traceback object that represents the point in the code where the exception was raised, or None if no exception was raised.
+
+
+
+## Generators in Python
+- Generators in Python are a simple way to create iterators. 
+- They allow you to declare a function that behaves like an iterator, i.e., it can be used in a for loop. 
+- Generators are written as regular functions but use the yield statement whenever they want to return data
+- The main advantage of generators is that they allow for lazy evaluation, providing items one at a time and only when requested. 
+- This is particularly useful when dealing with large datasets or streams of data where you don't want to load all the data into memory at once.
+
+```python
+def fibonacci():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+# Using the Fibonacci generator
+fib_gen = fibonacci()
+for _ in range(10):  # Get the first 10 Fibonacci numbers
+    print(next(fib_gen))
+
+```
+
+# FAQs on Generators
+
+### Can you explain what a generator is in Python and how it differs from a regular function?
+
+#### Here are the key differences between a generator and a regular function:
+
+#### Regular Function:
+
+1. Executes from start to finish when called.
+2. Uses the return statement to return a value.
+3. Once a function returns a value, it is finished; its local state is lost, and you cannot resume execution from where it left off.
+4. To return multiple values, a regular function typically returns a collection of values all at once, like a list or tuple.
+
+
+#### Generator Function:
+
+1. Defined like a regular function but uses the yield statement to yield values.
+2. When called, it returns a generator object without beginning execution immediately.
+3. When the generator's next() method is called (implicitly in a for loop or explicitly with the next() function), the generator function executes until it hits a yield statement, which pauses the function and returns the yielded value.
+4. The generator function retains its state between yields, so local variables and the execution point are saved until the next value is requested.
+5. Generators facilitate lazy evaluation, generating values on demand and thus can be more memory efficient, especially for large or infinite sequences.
+
+## What happens when a generator's next() method is called for the first time, and what happens when it's called after the generator has yielded a value?
+- When the generator's **next()** method is called (implicitly in a for loop or explicitly with the next() function), the generator function executes until it hits a yield statement, which pauses the function and returns the yielded value.
+
+### When a generator's next() method is called for the first time, the following occurs:
+
+1. The generator function begins executing from the top (the first line of the function) or from the initial point of entry.
+2. It runs until it encounters the first yield statement. At this point, the generator yields the value specified by the yield statement, effectively pausing its execution.
+3. The state of the generator function is saved at this point, including the values of all local variables, the position of the instruction pointer (which indicates the next line of code to be executed), and any other relevant state information.
+4. Control is returned to the caller, and the yielded value is provided as the result of the next() call.
+
+
+### When next() is called again after the generator has already yielded a value, the process is as follows:
+
+1. The generator function resumes execution immediately following the last yield statement that was executed.
+2. It continues running until it hits the next yield statement, where it again pauses and yields a value, saving its state as before.
+3. If the generator function runs to completion without encountering another yield statement (i.e., it hits a return statement or reaches the end of the function  StopIteration exception is raised. This signals to the caller that the generator has no more values to yield.)
+
+### Besides next(), what other methods can be called on a generator, and what are their purposes?
+Generator in Python has two other important methods: **send()** and **throw()**. Additionally, generators also have a **close()** method. 
+Here's a brief overview of each:
+
+- **send(value):** This method resumes the generator's execution by sending a value into the generator. The value sent in is returned by the yield expression, allowing the generator to interact with the caller. The first call to send() must be with None as the argument, which is equivalent to calling next(). Subsequent calls can send actual values, which can modify the generator's behavior.
+
+```python
+def my_generator():
+    received = yield 'Ready to receive'
+    yield f'Received: {received}'
+
+gen = my_generator()
+print(next(gen))  # Must be called first or send(None)
+print(gen.send('Hello'))
+```
+
+- **throw(type, value=None, traceback=None):** This method allows the caller to throw an exception inside the generator at the point where the last yield occurred. If the generator doesn't handle the thrown exception, it will propagate back to the caller.
+
+```python
+def my_generator():
+    try:
+        yield 'Hello'
+    except Exception as e:
+        yield f'Caught exception: {e}'
+
+gen = my_generator()
+print(next(gen))
+print(gen.throw(Exception, 'Something went wrong'))
+```
+
+- **close():** This method is used to stop a generator. It raises a GeneratorExit exception inside the generator to terminate the iteration. If the generator does not handle this exception or raises a StopIteration (by running to completion), the caller will not see an error. If the generator yields another value after close() is called, a RuntimeError is raised.
+
+```python
+def my_generator():
+    try:
+        yield 'Hello'
+        yield 'World'
+    except GeneratorExit:
+        print('Generator was closed!')
+
+gen = my_generator()
+print(next(gen))
+gen.close()  # Output: Generator was closed!
+```
+
+### Can you describe how a generator maintains its state between calls?
+
+A generator in Python maintains its state between calls through a mechanism known as a coroutine. When a generator function yields a value, the state of the function is "frozen," and a context is saved that includes the following information:
+
+- **Local Variables and Their States:** The values of all local variables are saved. This includes the variables that were in scope at the time of the yield and their current values.
+
+- **Current Instruction Pointer:** The position of the instruction pointer, or program counter, within the generator function is saved. This indicates the exact line or statement where the function should resume execution the next time it is called.
+
+- **Execution Stack Frame:** The generator's stack frame, which contains information about the function's operational environment, is preserved. This includes the function's call stack with any nested function calls.
+
+- **Pending Try-Except Blocks:** If the yield was inside a try block, or if there are pending try-except blocks, the information about these exception handlers is saved so that the generator can properly handle exceptions when resumed
+
+```python
+def counter_generator(low, high):
+    while low <= high:
+        yield low
+        low += 1  # Increment the counter
+
+# Create a generator object
+counter = counter_generator(1, 3)
+
+# The generator maintains its state between calls
+print(next(counter))  # Outputs: 1
+print(next(counter))  # Outputs: 2
+print(next(counter))  # Outputs: 3
+
+# The next call would raise StopIteration, as the generator is exhausted
+
+```
+- In this example, the counter_generator maintains the state of the low variable between calls to next(). Each call to next() yields the next number in the sequence and increments the low variable, demonstrating how the generator's local state is preserved.
+
+
