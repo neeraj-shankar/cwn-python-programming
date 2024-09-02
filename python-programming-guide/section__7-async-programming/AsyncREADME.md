@@ -114,3 +114,71 @@ async def main():
 # Run the event loop
 asyncio.run(main())
 ```
+
+## FAQ
+
+### How would you implement a producer-consumer model using asyncio in Python?
+The producer-consumer model is a common concurrency pattern where one or more producers generate data and place it into a shared resource (like a queue), and one or more consumers take data from the shared resource and process it.
+
+```python
+import asyncio
+import random
+import time
+
+async def producer(queue, n):
+    """Producer that generates items and puts them in the queue."""
+    for i in range(n):
+        # Simulate an item being produced
+        await asyncio.sleep(random.uniform(0.1, 1.0))  # Simulate a random production time
+        item = f"item-{i}"
+        await queue.put(item)  # Put the item into the queue
+        print(f"Produced {item}")
+
+    # Notify the consumers to stop by putting None in the queue
+    await queue.put(None)
+
+async def consumer(queue, id):
+    """Consumer that takes items from the queue and processes them."""
+    while True:
+        item = await queue.get()  # Get an item from the queue
+        if item is None:
+            # None is the signal to stop consuming
+            print(f"Consumer {id} stopping.")
+            break
+        # Simulate processing the item
+        await asyncio.sleep(random.uniform(0.1, 1.0))  # Simulate a random processing time
+        print(f"Consumer {id} processed {item}")
+        queue.task_done()
+
+async def main():
+    queue = asyncio.Queue()
+
+    # Create one producer and two consumers
+    producer_task = asyncio.create_task(producer(queue, 10))
+    consumer_tasks = [
+        asyncio.create_task(consumer(queue, 1)),
+        asyncio.create_task(consumer(queue, 2)),
+    ]
+
+    # Wait until the producer has finished producing
+    await producer_task
+    # Wait until all items in the queue have been processed
+    await queue.join()
+
+    # Wait until all consumers are done
+    for c in consumer_tasks:
+        await c
+
+# Run the main coroutine
+asyncio.run(main())
+```
+
+#### Explanation:
+
+- **Queue:** The asyncio.Queue() is used as a shared resource between the producer and consumers. The producer adds items to the queue, and the consumers take items out.
+
+- **Producer:** The producer coroutine generates items and places them in the queue using queue.put(item). After producing all items, it places None in the queue to signal the consumers to stop.
+
+- **Consumer:** The consumer coroutine takes items from the queue using queue.get(). If it gets None, it breaks out of the loop and stops. Otherwise, it processes the item.
+
+- **Main Function:** The main coroutine creates the queue, starts the producer, and starts two consumers. It waits for the producer to finish and for all items to be processed.
