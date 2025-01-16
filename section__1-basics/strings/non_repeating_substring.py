@@ -47,7 +47,7 @@ class NonRepeatingSubstring:
         n = len(self.input_string) 
         max_sum = 0
         s = 0
-        e = 0
+        e = 0   
         unique_chars = set()
 
         for i in range(0, n):
