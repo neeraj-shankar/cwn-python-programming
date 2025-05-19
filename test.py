@@ -1,15 +1,21 @@
-class SuppressError:
-    def __enter__(self):
-        print("Entering context...")
-        return self
+class MyClass:
+    class_variable = 10  # This is a class variable
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        if exc_type:
-            print(f"Suppressed Exception: {exc_value}")
-            return False  # Suppress the exception
+    def __init__(self, instance_variable):
+        self.instance_variable = instance_variable  # This is an instance variable
 
-# Using the context manager
-with SuppressError():
-    print("Inside the block...")
-    raise ValueError("An intentional error!")  # This will be suppressed
-print("Execution continues...")
+# Accessing class variable
+print(MyClass.class_variable)  # Output: 10
+
+# Creating instances
+obj1 = MyClass(20)
+obj2 = MyClass(30)
+
+# Accessing instance variables
+print(obj1.instance_variable)  # Output: 20
+print(obj2.instance_variable)  # Output: 30
+
+# Modifying class variable
+MyClass.class_variable = 15
+print(obj1.class_variable)  # Output: 15
+print(obj2.class_variable)  # Output: 15
