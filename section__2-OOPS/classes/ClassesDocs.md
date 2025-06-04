@@ -1,17 +1,84 @@
-# Classes and functions in Python
+# Python Class
 
-## Variables
------------------------------------------------------------------------------------------------------------------------
+A **class** in Python is like a blueprint for creating objects. It lets you bundle data (attributes) and behaviors (methods) into one structure.
+
+## Classes and objects
+
+### Useful Methods inbuilt
+
+#### **id()**: It returns the identity of the object, which is typically its memory address (though exact details depend on the Python implementation).
+
+### Object of the class or instance of the class
+
+```python
+obj = ClassesPractice("Neeraj")
+```
+Here’s what really happens under the hood:
+
+Python calls MyClass.__new__(...) → this creates the object.
+Then it calls MyClass.__init__(obj, ...) → this initializes the object.
+
+We are **creating an instance of a class**, and this instance is also called a **class object**.
+
+So technically:
+- ✅ we're **creating an instance** of the class.
+- ✅ That instance is also referred to as a **class object** or simply an **object**.
+
+In short:
+> **"Creating an object" = "Creating an instance"** — both are commonly used and mean the same thing in Python.
+
+
+### 🔸 __init__ in python vs constructor in Java?
+
+Yes and no. Here's a comparison:
+
+| Feature                     | `__init__` in Python              | Constructor in Java              |
+|----------------------------|-----------------------------------|----------------------------------|
+| Name                       | Always `__init__`                 | Same as class name               |
+| Purpose                    | Initializes the object            | Creates and initializes object   |
+| Object creation            | Object is already created before `__init__` | Constructor creates the object |
+| Can be overloaded?         | Not directly (can use defaults)   | Yes, Java supports overloading   |
+| Return type                | Must return `None`                | No return type (not even `void`) |
+
+So in **Java**, the constructor both **creates** and **initializes** the object.  
+In **Python**, object creation happens first (via `__new__`), then `__init__` is called to **initialize** it.
+
+---
+
+## Acess Modifier
+
+```python
+class Person:
+    def __init__(self, name, age, password):
+        self.name = name            # Public
+        self._age = age             # Protected (by convention)
+        self.__password = password  # Private (name mangled)
+
+    def greet(self):
+        print(f"Hi {self.name}!")
+
+p = Person("Neeraj", 30, "secret123")
+
+print(p.name)       # ✅ OK (public)
+print(p._age)       # ⚠️ Technically OK, but not recommended
+# print(p.__password)  ❌ Error
+
+# You *can* still access it like this (name mangling):
+print(p._Person__password)  # 😬 Not recommended, but possible
+```
+
+## Variables (Attributes)
+
 In Python, class and instance variables are used to store data within classes, but they have different scopes and
 purposes.
 
 ### Class Variables
+
 1. Class variables are shared among all instances of a class.
 2. They are defined within the class but outside of any instance methods.
 3. Class variables are accessed using the class name or an instance of the class.
 4. Changes to a class variable are reflected in all instances of the class.
 5. They are often used to store constants or shared data among instances.
-
 
 ```python
 class MyClass:
@@ -38,10 +105,12 @@ print(obj2.class_variable)  # Output: 15
 ```
 
 ## What are the different methods that can be used
+
 In Python, there are three types of methods that you can define within a class: class methods, instance methods, and
 static methods. Each type of method has different characteristics and use cases.
 
 ### Instance Method
+
 1. **Instance methods** are the most common type of methods in Python classes.
 2. They operate on instances of the class and have access to instance-specific data and attributes.
 3. The first parameter of an instance method is conventionally named self, which refers to the instance itself.
@@ -66,6 +135,7 @@ print(result)  # Output: "Instance method called with value: 42"
 ```
 
 ### Class Methods
+
 1. **Class methods** are defined using the *@classmethod* decorator.
 2. They operate on the class itself rather than on instances.
 3. The first parameter of a class method is conventionally named cls, which refers to the class.
@@ -92,6 +162,7 @@ print(result)  # Output: "Class variable value: 10"
 ```
 
 ### Static Method
+
 1. Static methods are defined using the *@staticmethod* decorator.
 2. They are not bound to the class or its instances and do not have access to instance or class variables.
 3. They behave like regular functions but are placed within the class's namespace for organization.
@@ -109,9 +180,11 @@ print(result)  # Output: 8
 ```
 
 ## **method overriding** and **method overloading** in python
+
 ---
 
 ### **Method Overriding**
+
 - **Definition**: When a subclass provides a specific implementation of a method already defined in its parent class.
 - **Purpose**: Allows the subclass to modify or extend the behavior of the parent class's method.
 - **Key Points**:
@@ -120,6 +193,7 @@ print(result)  # Output: 8
   - You can still access the parent class's method using `super()`.
 
 #### **Example**:
+
 ```python
 class Parent:
     def greet(self):
@@ -135,18 +209,21 @@ child.greet()
 ```
 
 **Output**:
+
 ```
 Hello from Child
 Hello from Parent
 ```
 
 #### **Use Case**:
+
 - Specializing behavior for a subclass while retaining base functionality.
 - Example: A `Shape` class with a `draw` method that is overridden by specific shapes like `Circle` and `Square`.
 
 ---
 
 ### **Method Overloading**
+
 - **Definition**: Having multiple methods with the same name but different numbers or types of parameters.
 - **Purpose**: Allows different behaviors based on arguments provided.
 - **Key Points**:
@@ -154,6 +231,7 @@ Hello from Parent
   - Instead, you can achieve a similar effect using **default arguments** or variable-length arguments (`*args` and `**kwargs`).
 
 #### **Example Using Default Arguments**:
+
 ```python
 class Calculator:
     def add(self, a, b=0, c=0):
@@ -166,6 +244,7 @@ print(calc.add(5, 10, 15))  # Output: 30
 ```
 
 #### **Example Using `*args`**:
+
 ```python
 class Calculator:
     def add(self, *args):
@@ -181,17 +260,17 @@ print(calc.add(5, 10, 15, 20)) # Output: 50
 
 ### **Comparison**
 
-| Feature              | **Method Overriding**                   | **Method Overloading**                       |
-|----------------------|------------------------------------------|---------------------------------------------|
-| **Purpose**          | Modify or extend a parent's method.     | Define methods with varying arguments.      |
-| **Context**          | Happens in inheritance (parent-child).  | Happens in the same class.                  |
-| **Flexibility**      | Explicitly replaces base behavior.      | Adds flexibility to a single method.        |
-| **Python Support**   | Fully supported with `super()`.         | Achieved using default arguments or `*args`.|
-| **Example**          | Redefining `greet` in a child class.    | Adding numbers with varying arguments.      |
+| Feature                  | **Method Overriding**            | **Method Overloading**                   |
+| ------------------------ | -------------------------------------- | ---------------------------------------------- |
+| **Purpose**        | Modify or extend a parent's method.    | Define methods with varying arguments.         |
+| **Context**        | Happens in inheritance (parent-child). | Happens in the same class.                     |
+| **Flexibility**    | Explicitly replaces base behavior.     | Adds flexibility to a single method.           |
+| **Python Support** | Fully supported with `super()`.      | Achieved using default arguments or `*args`. |
+| **Example**        | Redefining `greet` in a child class. | Adding numbers with varying arguments.         |
 
 ---
 
 ### **When to Use Each**
+
 - Use **overriding** when you need to tailor a method’s behavior in a subclass to reflect its specific role.
 - Use **overloading** when you want a method to handle multiple cases, such as different numbers or types of arguments, for convenience and code readability.
-
