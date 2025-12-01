@@ -19,3 +19,11 @@ print(obj2.instance_variable)  # Output: 30
 MyClass.class_variable = 15
 print(obj1.class_variable)  # Output: 15
 print(obj2.class_variable)  # Output: 15
+
+
+import sys
+num_list = [x for x in range(1000)]
+num_gen = (x for x in range(1000))
+
+print(sys.getsizeof(num_list))
+print(sys.getsizeof(num_gen))

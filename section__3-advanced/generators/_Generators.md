@@ -147,9 +147,14 @@ A **generator** is a special type of iterable in Python. Unlike lists or tuples,
 
    Useful for tasks like generating test data or simulations.
 
+### `close()` vs `throw()'
+| Method           | What it does                                                                                                                                                              | Typical Use                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **`close()`**    | Injects a `GeneratorExit` into the generator to **force termination**. Generator must stop; cannot yield further.                                                         | Gracefully stop the generator and release resources.                       |
+| **`throw(exc)`** | Injects a given exception (`exc`) into the generator at the current yield point. The generator may **handle it** (try/except) and continue, or let it propagate and stop. | Simulate errors inside the generator or interrupt execution conditionally. |
+
+
 ## FAQs on Generators
-
-
 Generator Basics:
 
 ---
