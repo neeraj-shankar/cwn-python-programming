@@ -1,4 +1,7 @@
+
+
 ## Generators in Python
+
 
 ### **What Are Generators?**
 
