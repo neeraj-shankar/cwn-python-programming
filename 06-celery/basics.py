@@ -63,3 +63,12 @@ def fetch_data_slow(api, duration):
     logging.info(f"Data Received from slow {api} in {duration} seconds")
     return f"{api} Data"
     
+
+@app.task
+def add_nums(a, b):
+    logging.info(f"Adding {a} and {b}")
+
+    result = a + b
+    logging.info(f"Final Computed Value: {result}")
+
+    return result

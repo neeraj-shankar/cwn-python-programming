@@ -1,4 +1,3 @@
-import time
 import re
 # Can you write a decorator that times the execution of a function?
 import time
@@ -42,6 +41,17 @@ def calculate_execution_time(func):
     
     # Return the wrapper function to replace the original function
     return wrapper
+
+def async_timing(func):
+    @wraps(func)
+    async def wrapper(*args, **kwargs):
+        start = time.perf_counter()
+        result = await func(*args, **kwargs)
+        end = time.perf_counter()
+        print(f"{func.__name__} took {end - start:.6f} seconds")
+        return result
+    return wrapper
+
 
 def cache_decorator(func):
     """
@@ -94,15 +104,15 @@ def my_decorator(*args, **kwargs):
 # Example usage:
 
 # Used without arguments
-@my_decorator
-def my_function1():
-    print("Function 1 called")
+# @my_decorator
+# def my_function1():
+#     print("Function 1 called")
 
-my_function1()
+# my_function1()
 
-# Used with arguments
-@my_decorator(42, debug=True)
-def my_function2():
-    print("Function 2 called")
+# # Used with arguments
+# @my_decorator(42, debug=True)
+# def my_function2():
+#     print("Function 2 called")
 
-my_function2()
+# my_function2()

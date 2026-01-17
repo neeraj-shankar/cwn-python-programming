@@ -60,6 +60,16 @@ celery -A tasks worker -l info -Q low_priority --concurrency=1 -n worker_slow
 
 - **Monitoring:** In Flower, you will see exactly which queue is backing up.
 
+## The Chain (|)
+- A Chain is for tasks that must happen sequentially. 
+- The most important thing to know is that the **output** of the first task automatically becomes the **first argument** of the second task.
+
+## The Group
+- A Group is for parallel execution. Use this when you have 100 independent things to do and you want to use all your worker's cores.
+
+## The Chord (The "Aggregation" Pattern)
+- A Chord is a group with a callback. It says: "Run all these parallel tasks, and once every single one is finished, send all their results as a list to this final task."
+
 ## FAQs
 
 ### 1. Why would you ever want **Concurrency = 1**?
@@ -79,3 +89,38 @@ In a real-world project, you might set a specific queue to concurrency 1 if:
 ### 3. Explain this bash command: "celery -A routing_tasks worker -l info -Q high_priority -n worker_fast"
 - Starts a Celery worker for the routing_tasks app that listens only to the high_priority queue, logs at INFO level, and runs with a custom worker name worker_fast.
 - This command starts a Celery worker for a specific app, sets the logging level, restricts the worker to consume only from the high_priority queue, and assigns a custom worker name for easier identification and monitoring.
+
+### 4. In the Celery architecture, which component is responsible for receiving task messages and placing them in a queue for workers to consume?
+- The broker, such as Redis or RabbitMQ, acts as the transport and storage layer for task messages between producers and workers.
+
+### 5. Which Celery Canvas primitive should you use if you want to run a series of tasks in parallel and then execute a final 'callback' task once they are all finished?
+- A chord consists of a header group (parallel tasks) and a callback that executes only after the entire header group completes.
+
+### 6. What does the 'bind=True' argument in a task decorator allow you to do?
+- This allows you to access task properties or methods like 'self.retry()' and 'self.update_state()'.
+- `bind=True` allows a Celery task to access the task instance via self, enabling retries, access to request metadata, and advanced task control.
+
+### 7. If you need to ensure a task is 'Idempotent,' what are you trying to achieve?
+- The task can be executed multiple times without changing the result beyond the initial application.
+- Idempotency is crucial for reliability, ensuring that accidental retries don't cause duplicate side effects like double payments.
+
+
+### 8. How can make the task idempotent ?
+- Idempotency ensures that retrying a task does not cause duplicate side effects. 
+- Since distributed systems can execute tasks more than once, we design tasks to be retry-safe using **idempotency keys**, **state checks**, **database constraints**, **atomic transactions**, and *idempotent external APIs*.
+
+### 9. Why would you set 'ignore_result=True' on a specific task?
+- To improve performance and save storage in the Result Backend.
+- If you don't need the return value, ignoring it reduces the overhead of writing to and maintaining the backend (e.g., Redis or SQL).
+
+### 10. A task is received by a worker but the worker crashes before finishing. After some time, the task reappears in the queue. Which configuration setting primarily controls this 'reappearance' time?
+- **visibility_timeout**: This setting defines the number of seconds to wait for the worker to acknowledge the task before the broker redelivers it to another worker.
+
+### 11. If you are running 1,000 short-lived tasks per second that perform light network requests, which worker pool type is most efficient for high throughput?
+- **eventlet or gevent**: These use green threads/co-routines to handle thousands of concurrent I/O connections within a single process with minimal overhead.
+
+### 12. You have a task that updates a database. To ensure that a task is only removed from the queue after the database commit is successful, which setting should you enable?
+- **task_acks_late**: By default, tasks are acknowledged just before execution; enabling this ensures acknowledgment happens only after the task returns.
+
+### 13. What is the danger of setting 'worker_prefetch_multiplier = 0'?
+- The worker will stop accepting tasks entirely. A zero value actually tells the worker to keep prefetching as many tasks as possible without limit.

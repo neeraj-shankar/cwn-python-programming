@@ -1,7 +1,12 @@
-## Decorators in Python
-
+# Decorators in Python
 Decorators are Python's way to dynamically alter or extend the behavior of functions or methods without modifying their source code. They are often used for tasks such as logging, enforcing access control, memoization, and more.
 
+## Mental Model
+```sql
+function → object
+decorator → returns new function object
+attributes → live on the returned object
+```
 ---
 
 ### **2. Anatomy of a Decorator**
@@ -250,50 +255,56 @@ show()
 2. Create a decorator that retries a function if it raises an exception, with a maximum of 3 retries.
 3. Implement a decorator that converts the return value of a function into JSON format.
 
-### FAQs based on Decorators
+## FAQs
 
-1. **What is a decorator in Python? Can you explain how it works?**
+### 1. What is the primary difference between a 'decorator' and a 'decorator factory'?
+- A decorator factory is a function that returns a decorator, allowing it to accept configuration arguments.
+- Factories add a level of indirection so that arguments can be passed before the actual function wrapping occurs.
 
-   - Expect to explain the concept of decorators as functions that modify the behavior of other functions or methods. You should be able to describe the process of wrapping a function and the use of `@` syntax.
-2. **Can you write a decorator that times the execution of a function?**
+### 2. When using a class as a decorator for a method, what is a common issue encountered regarding the 'self' argument?
+- The instance of the class being decorated is not passed to the call method of the decorator class
+- Class-based decorators often fail to act as descriptors, causing the 'self' of the decorated method to be lost.
 
-   - This question tests your ability to write practical decorators. You might need to use the `time` module to calculate the duration of function execution.
-3. **How can you preserve a function's metadata when using decorators?**
+### 3. Which method must you implement to make a class-based decorator work correctly as a 'descriptor' for methods?
+- The `get` method allows the decorator to return a bound version of the method including the instance ('self').
 
-   - Discuss the use of `functools.wraps` and why it's important to preserve a function's `__name__`, `__doc__`, and other attributes.
-4. **What is the difference between `@staticmethod`, `@classmethod`, and instance methods?**
+### 4. In a nested decorator scenario, which decorator has direct access to the original function object?
+- The one immediately above the function definition. The bottom-most decorator is the first to receive the original function; others receive the wrapper from below.
 
-   - You should be able to explain the differences and when to use each one.
-5. **Can you create a decorator that caches the result of a function call?**
+### 5. How can you implement a decorator that can be used both with and without arguments (e.g., @dec or @dec(arg))?
+- By checking if the first argument is a callable and returning a wrapper or a partial function accordingly.
+- Determining if the input is the function to be decorated or a configuration argument allows for flexible usage.
 
-   - This question assesses your understanding of more complex decorator patterns, such as memoization or caching.
-6. **How would you implement a decorator that can be used both with and without arguments?**
+### 6. If multiple decorators are used, which part of the code executes first during the actual call of the decorated function?
+- When calling the function, you trigger the outermost (topmost) wrapper first.
 
-   - This tests your knowledge of writing decorators that can handle optional arguments, which requires an extra layer of function nesting.
-7. **Explain the decorator pattern and its advantages and disadvantages.**
+### 7. What happens if a decorator adds an attribute to the function object it wraps?
+- When a decorator adds attributes, those attributes are attached to the wrapper function it returns. Since the original function is replaced, accessing those attributes works transparently, provided `functools.wraps` is used to preserve metadata.
+- This pattern is commonly used for routing, authentication, instrumentation, and configuration in frameworks.
 
-   - Discuss the design pattern, not just the Python feature, and when it might be useful or problematic in software design.
-8. **Can you stack multiple decorators on a single function? What is the order of execution?**
+### 8. How would you implement a decorator that validates the types of arguments passed to a function?
+- By inspecting *args and **kwargs inside the wrapper and comparing them against expected types.
+- The wrapper intercepts the call, allowing it to verify arguments before passing them to the original function.
 
-   - You should know how to apply multiple decorators to a function and understand how the order affects the result.
-9. **How do decorators interact with function arguments?**
+### 9. Why might you use a decorator to implement a 'Singleton' pattern for a class?
+- The decorator can intercept the class call to ensure only one instance is ever created and returned.
 
-   - Explain how to write decorators that can handle functions with any combination of arguments using `*args` and `**kwargs`.
-10. **Are there any performance considerations when using decorators?**
+### 10. Which attribute, added by @functools.wraps, allows you to access the original, undecorated function?
+- `wrapped`: This attribute points back to the original function, allowing you to 'bypass' the decorator if needed.
 
-    - Discuss any potential performance impacts of decorators, such as added overhead or issues with recursive decorators.
-11. **Can you explain how a class-based decorator works compared to a function-based decorator?**
+### 11. How does a 'stateful' closure-based decorator maintain data between function calls?
+- By defining a variable in the outer decorator function that the inner wrapper accesses. The closure 'closes over' the local variables of the outer function, keeping them alive across calls.
 
-    - You might need to describe how to implement a decorator using a class with `__call__` method and when it might be preferable over a function-based decorator.
-12. **How can you debug a function wrapped with a decorator?**
+### 12. Which of these is a valid use for a Class Decorator?
+- Class decorators can modify the class object before it is used to create instances.
 
-    - Discuss strategies for debugging, such as temporarily disabling the decorator or using tools that understand decorators.
-13. **Can you use decorators to enforce function argument types or return types?**
+### 13. What is the purpose of the nonlocal keyword in a stateful decorator?
+- To allow the wrapper function to modify a variable defined in the outer decorator function.
+- Without nonlocal, the wrapper would create a local variable instead of updating the outer state variable.
 
-    - This question assesses your knowledge of using decorators for type checking, which can be particularly relevant with the introduction of type hints in Python.
-14. **How would you implement a decorator that logs every call to the decorated function?**
+### 14. Can you apply a decorator to a lambda function?
+- Yes, by passing the lambda as an argument to the decorator function manually.
 
-    - This tests your ability to write decorators for cross-cutting concerns like logging.
-15. **Can you describe a real-world scenario where you successfully used a decorator in your code?**
-
-    - Be prepared to discuss actual use cases from your experience, which might include decorators for authentication, authorization, transaction handling, or other aspects.
+### 15. What does it mean for a decorator to be 'transparent'?
+- It preserves the original function's signature, metadata, and return value behavior.
+- A transparent decorator adds functionality (like logging) without changing how the function is used by other code.
