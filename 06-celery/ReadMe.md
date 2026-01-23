@@ -70,6 +70,18 @@ celery -A tasks worker -l info -Q low_priority --concurrency=1 -n worker_slow
 ## The Chord (The "Aggregation" Pattern)
 - A Chord is a group with a callback. It says: "Run all these parallel tasks, and once every single one is finished, send all their results as a list to this final task."
 
+## Indemptoncy
+- Idempotency is perhaps the most critical concept in distributed systems like Celery. 
+- Because Celery follows an "at-least-once" delivery guarantee, there is always a small chance that a task is executed more than once 
+- (e.g., if the worker crashes right after finishing the work but before sending the "ACK" back to RabbitMQ/Redis).
+
+### The Core Strategy: The "State Check"
+The most reliable way to achieve idempotency is to ensure that every task checks the state of the system before performing an action.
+
+1. *Unique Task IDs*: Every business action should have a unique identifier (like an order_id or a transaction_uuid).
+2. *Database Constraints*: Use a UNIQUE constraint in your database on that identifier.
+3. *Status Tracking:* Before processing, check if the record is already marked as "Processed" or "Paid."
+
 ## FAQs
 
 ### 1. Why would you ever want **Concurrency = 1**?

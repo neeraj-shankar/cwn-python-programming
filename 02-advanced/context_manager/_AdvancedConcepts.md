@@ -12,7 +12,7 @@ Context managers simplify resource management by handling setup and teardown act
 
 A context manager must implement two methods:
 
-1. **`__enter__()`**: This is executed when the `with` block is entered. It sets up the resource and returns it if necessary.
+1. **`__enter__`**: Sets up the resource. This is executed when the with block starts. Whatever it returns is what gets assigned to the variable after the as keyword.
 2. **`__exit__(exc_type, exc_value, traceback)`**: This is executed when the `with` block is exited. It handles cleanup actions like closing files or releasing locks. If there was an exception in the block, its type, value, and traceback are passed to this method.
 
 ---
@@ -353,6 +353,7 @@ finally:
 | **Reuse**           | Easily reusable via a defined context manager    | Reuse requires duplicating `try/finally`logic   |
 
 ---
+
 
 
 

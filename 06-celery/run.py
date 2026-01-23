@@ -1,6 +1,7 @@
 import basics
 from chained_tasks import fetch_user_data, process_user_data
 from celery import chain, group
+import idempotent_tasks
 # Run the task using delay()
 # remove_duplicates.delay()
 
@@ -37,10 +38,18 @@ class RunTasks:
         result = jobs.apply_async()
         print(result.get())
 
+    
+    @staticmethod
+    def run_idempotent():
+
+        idempotent_tasks.process_payement.apply_async(args=('am-2026011820349', 20))
+
+
 if __name__ == "__main__":
 
     # RunTasks.run_chained_tasks()
-    RunTasks.run_grouped_tasks()
+    # RunTasks.run_grouped_tasks()
+    RunTasks.run_idempotent()
 
 
 # TODO Concepts: Visibility Timeout, Dead Letter Queues, Prefetch Multiplier, Worker Pools (Solo vs Prefork vs Eventlet), Task Atomicity, and Result Expiration.

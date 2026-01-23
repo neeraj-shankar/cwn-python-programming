@@ -256,6 +256,23 @@ from collections import Counter
 counts = Counter(items)  # More efficient than manual dict counting
 ```
 
-## Conclusion
+## **defaultdict**
+- `defaultdict` is a subclass of the normal dict from the collections module. 
+- It automatically initializes missing keys with a default value using a factory function. It eliminates the need for explicit existence checks and is commonly used for counting, grouping, and building data structures like graphs.
 
-Python dictionaries are highly optimized data structures with excellent average-case performance. Understanding when and how to use different methods can significantly impact your code's performance and readability. The key is choosing the right method for your specific use case while being aware of the complexity trade-offs.
+### Summary Table
+| Code                | Meaning                                      |
+| ------------------- | -------------------------------------------- |
+| `defaultdict(list)` | Missing key → create `[]`                    |
+| `defaultdict(int)`  | Missing key → create `0`                     |
+| `defaultdict(set)`  | Missing key → create `set()`                 |
+| `defaultdict()`     | Missing key → **nothing happens → KeyError** |
+
+## FAQs Hashmaps 
+
+### 1. What does defaultdict(list) mean?
+- `d = defaultdict(list)`--> Whenever a key is missing, automatically create an empty list [] for it.
+
+### 2. What are the drawbacks of using defaultdict?
+- The main drawback of defaultdict is that it **silently** creates keys on **access**, which can hide bugs, cause unintended data pollution, and lead to memory issues in long-running systems.
+- If missing key is an **error → use dict**. If missing key is **expected → use defaultdict**
