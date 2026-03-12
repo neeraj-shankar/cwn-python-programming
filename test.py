@@ -1,10 +1,6 @@
-# """I am doc string in global space"""
+import pickle 
 
-# x = 10
 
-# def test(x: int = 5):
-#     pass
+with open('/Users/codewithneeraj/StudyZone/cwn-python-programming/pickled.pkb', 'rb') as f:
 
-# print(globals())
-# print("**"*20)
-print(locals())
+    pickle.load(f)

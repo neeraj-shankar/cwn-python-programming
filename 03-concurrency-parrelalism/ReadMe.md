@@ -73,3 +73,49 @@ The very thing that makes threads fast makes them terrifyingly unstable if you a
 4. **Thread A** resumes and pours... wait, the salt is empty/moved!
 
 - **This is a Race Condition**. Because there are no walls between them, one "clumsy" thread can corrupt the data of every other thread in that process. If one thread crashes in a way that corrupts the shared memory, the entire process (and all other threads) will likely crash.
+
+## The concept of **Multiprocessing**
+
+### The **Pool** of workers
+One way is that we manually create multiple processes like p1 and p2. But what if we have 1,000 images to resize or 10,000 files to scan? we cannot create 10,000 processes—the computer would run out of RAM and crash *(this is known as a resource exhaustion)*.
+
+#### 1. The Concept: The "Office" Analogy
+- Instead of hiring a new person for every single task, you hire a fixed team of 4 workers (the Pool).
+- You put all 1,000 tasks into a "To-Do" pile.
+- As soon as Worker 1 finishes a task, they grab the next one from the pile.
+- The computer stays stable because only 4 processes are running at any given time, regardless of how many tasks you have.
+
+#### 2. Why "The Pool" is the Professional Choice
+Using a Pool (like `multiprocessing.Pool` in Python) handles three annoying things for you:
+
+- **Work Distribution:** It automatically splits the 1,000 tasks among the workers.
+- **Aggregation:** It collects all the results from the "walled" processes and puts them back into a nice list for you.
+- **Lifecycle Management:** It starts and shuts down the processes automatically when the job is done.
+
+#### Critical Rules for Mastering Pools
+1. **Pool Size:** Never make your Pool size significantly larger than your number of CPU cores. If you have 8 cores and make 100 processes, the CPU will spend more time **"switching"** between them than actually working. This is called **Thrashing**.
+
+2. **The "Pickle" Problem:** Because processes are isolated, the data you send to a Pool must be "Pickleable" (serializable). This is just a fancy way of saying the data must be able to be turned into *bytes to be sent over the "wall."*
+
+3. **Memory Management:** A Pool reuses the same worker processes for multiple tasks. This is much faster than killing and restarting a process every time.
+
+
+## FAQs
+
+### 1. Do you know why counter += 1 is dangerous in threads?
+
+### 2. How do we achieve Multithreading in Python?
+- Python supports multithreading using the threading module.
+- We can create threads either by passing a function to Thread or by subclassing the Thread class. However, in CPython, the Global Interpreter Lock ensures that only one thread executes at a time, so **multithreading is most effective for I/O-bound tasks, not CPU-bound tasks.**
+
+### 3. If GIL allows only one thread, how do I/O work in parallel?
+- The GIL is released during blocking I/O operations.
+- Although the GIL allows only one thread to execute Python bytecode at a time, it is released during blocking I/O operations, which allows other threads to run. This makes multithreading effective for I/O-bound tasks. However, for CPU-bound tasks, threads cannot run in parallel due to the GIL, so multiprocessing is used to achieve true parallelism.
+
+### 4. What is the purpose of asyncio?
+- `asyncio` provides single-threaded concurrency using an event loop, allowing efficient handling of a large number of I/O-bound tasks without creating multiple threads.
+
+### 5. What problem does asyncio solve?
+- Threads solve I/O, but threads are heavy, context switching is expensive, 10k threads = memory disaster
+- asyncio solves, high-scale I/O concurrency with very low overhead
+- Example use cases: Web servers (FastAPI, aiohttp), Web scraping, Chat systems, Real-time APIs, Microservices

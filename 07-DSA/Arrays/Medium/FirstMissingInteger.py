@@ -45,7 +45,7 @@ class FirstMissingInteger():
             if num < n+1:
                 nums[pos] = -1 * abs(nums[pos])
         
-        print(f"Final State of nums: {nums}")    
+        # print(f"Final State of nums: {nums}")    
         # Return idx + 1 first positive number encountered
         for idx , num in enumerate(nums):
             if num > 0:
