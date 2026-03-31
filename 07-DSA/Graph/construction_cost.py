@@ -30,36 +30,48 @@ class Pair:
 class ConstructionCost():
 
     def solution_prims(self, A: int, B: list[list[int]]) -> int:
-        """
+        MOD = 10**9 + 7
         
-        """
-        # Size of the matrix --> totals rows
-        n = len(B)
-        # Create visited array of size A to track visted nodes
-        visited = [False for _ in range(A+1)]
-
-        # Create the adjacency list from given matrix
-        graph = [[] for _ in range(A+1)]
-        for i in range(0, n):
-            u = B[i][0]
-            v = B[i][1]
-            wt = B[i][2]
-            graph[u].append(Pair(wt, v))
-
-        print(graph)
-
-        # Create Priority Queue --> minheap
-        pq = []
-        heapq.heappush(pq, Pair(0, 1))
-        ans = 0
-        while(len(pq) > 0):
-
-            # Remove
-            rem = heapq.heappop(pq)
-            vt = rem.vt
-            cost = rem.cost
+        # Step 1: Build graph
+        graph = {i: [] for i in range(1, A + 1)}
+        
+        for u, v, w in B:
+            graph[u].append((w, v))
+            graph[v].append((w, u))
+        
+        # Step 2: Min Heap
+        min_heap = []
+        heapq.heappush(min_heap, (0, 1))  # (cost, node)
+        
+        # Step 3: Visited array
+        visited = [False] * (A + 1)
+        
+        total_cost = 0
+        nodes_used = 0   # optional (for safety check)
+        
+        # Step 4: Prim's Algorithm
+        while min_heap:
+            cost, node = heapq.heappop(min_heap)
             
-
+            if visited[node]:
+                continue
+            
+            # Mark visited
+            visited[node] = True
+            total_cost = (total_cost + cost) % MOD
+            nodes_used += 1
+            
+            # Explore neighbors
+            for nei_cost, neighbor in graph[node]:
+                if not visited[neighbor]:
+                    heapq.heappush(min_heap, (nei_cost, neighbor))
+        
+        # Optional: check if all nodes connected
+        if nodes_used != A:
+            return -1
+        
+        return total_cost
+    
 if __name__ == "__main__":
 
     cc = ConstructionCost()
@@ -68,11 +80,4 @@ if __name__ == "__main__":
     A = 3
     B = [   [1, 2, 14], [2, 3, 7], [3, 1, 2]   ]
     print(f"Minimum cost to build: {cc.solution_prims(A, B)}")
-    # pq = []
-    # heapq.heappush(pq, Pair(10, 1))
-    # heapq.heappush(pq, Pair(5, 2))
-    # heapq.heappush(pq, Pair(20, 3))
 
-    # while pq:
-    #     p = heapq.heappop(pq)
-    #     print(p.cost, p.vt)

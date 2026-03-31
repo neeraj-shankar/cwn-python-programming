@@ -24,6 +24,7 @@ class CaptureRegion:
         2. Add all the Safe cell to the queue and do the following:
             a. remove it, look in all four direction and mark any '0' it touches as safe.
             b. Add that cell to the queue.
+        3. Traverse the matrix, mark cell with value '0' as 'X' (captured) and one with 'S' as '0'
 
         """
         n = len(matrix)
