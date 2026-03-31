@@ -1,0 +1,28 @@
+[project]
+name = "my_app"
+version = "0.1.0"
+description = "A professional pytest-mastery project"
+dependencies = [
+    "requests",
+]
+
+[tool.pytest.ini_options]
+# 1. Base configuration
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v --tb=short --strict-markers"
+
+# 2. Registering custom markers (prevents typos)
+markers = [
+    "slow: marks tests as slow (run with '-m slow')",
+    "integration: marks tests as integration tests",
+]
+
+[tool.coverage.run]
+# 3. Coverage settings: which folder to measure
+source = ["src"]
+
+[tool.coverage.report]
+# Fail the build if coverage drops below 90%
+fail_under = 90
+show_missing = true
