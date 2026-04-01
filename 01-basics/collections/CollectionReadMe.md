@@ -125,3 +125,31 @@ def is_palindrome(s):
 | Index access   | ❌ O(n)        | ✅ O(1)         |
 | Insert at ends | ✅ Efficient   | ❌ Slower       |
 | Use case       | Queues/stacks | Random access  |
+
+
+## What is namedtuple?
+A namedtuple is a lightweight object type from the collections module that lets you create tuple-like objects with named fields.
+```python
+from collections import namedtuple
+
+Student = namedtuple('Student', ['name', 'age', 'marks'])
+
+s1 = Student('Neeraj', 21, 95)
+
+print(s1.name)   # Neeraj
+print(s1[1])     # 21 (still works like tuple)
+```
+
+### Benefits of namedtuple
+- Access via names instead of indices Makes code self-documenting
+- **Lightweight** (Better than class). Compared to a normal class: No **`__init__`** boilerplate, Less memory usage, Faster to create.
+- Immutable (Like tuple). Once created, values cannot be changed
+
+### Named Tuple vs Data class
+| Feature     | namedtuple  | dataclass       |
+| ----------- | ----------- | --------------- |
+| Mutability  | ❌ Immutable | ✅ Mutable       |
+| Performance | ⚡ Faster    | Slightly slower |
+| Methods     | ❌ No        | ✅ Yes           |
+| Defaults    | Limited     | ✅ Easy          |
+| Use case    | Simple data | Rich objects    |
