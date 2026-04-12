@@ -1,0 +1,11 @@
+employee_id,employee_name,department,sales,date
+1,Alice,Sales,1500,2023-01-01
+2,Bob,Sales,1200,2023-01-02
+3,Charlie,Sales,2000,2023-01-03
+4,David,Marketing,800,2023-01-01
+5,Eve,Marketing,1100,2023-01-02
+6,Frank,Marketing,950,2023-01-03
+7,Grace,IT,3000,2023-01-01
+8,Heidi,IT,2500,2023-01-02
+9,Ivan,IT,2800,2023-01-03
+10,Mallory,Sales,1000,2023-01-04

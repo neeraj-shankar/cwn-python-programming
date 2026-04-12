@@ -116,7 +116,7 @@ df = df.withColumnRenamed("profit", "earnings")
 
 #### B. Filtering (Where)
 
-````python
+```python
 # Filter for high price products
 high_price_df = df.filter(df["price"] > 2000)
 
@@ -124,3 +124,56 @@ high_price_df = df.filter(df["price"] > 2000)
 df.filter((df["price"] > 2000) & (df["name"] == "Ankit")).show()
 ```
 
+#### C. Adding New Columns (withColumn)
+
+```python
+# Calculate Total Cost (Price + Profit)
+df = df.withColumn("total_cost", df["price"] + df["profit"])
+```
+
+#### D. Grouping and Aggregating
+
+```python
+from pyspark.sql import functions as F
+
+# Group by product and find average price
+df.groupBy("product").agg(F.avg("price").alias("avg_price")).show()
+```
+
+### 3. Common Actions
+
+| **Action**   | **Description**                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------- |
+| `.show(n)`   | Prints the first **n rows** in a readable table format (default is 20).                     |
+| `.count()`   | Returns the **total number of rows** in the DataFrame (triggers full computation).          |
+| `.collect()` | ⚠️ **Danger:** Pulls **all data to driver memory**. Use only on small or filtered datasets. |
+| `.first()`   | Returns the **first row** as a `Row` object (useful for quick checks).                      |
+| `.write`     | Saves the DataFrame to **storage systems** (file, DB, etc.), e.g., CSV, Parquet.            |
+
+
+## Pyspark - Advanced
+
+### Window Functions
+
+Window functions allow you to perform calculations across a "window" of rows related to the current row, without collapsing them into a single output row (like a standard groupBy does).
+
+- **The Components:** You need a WindowSpec defined by partitionBy() (grouping), orderBy() (sorting), and optionally rowsBetween() (framing).
+
+- **Common Functions:** `rank()`, `dense_rank()`, `row_number()`, and lead/lag analytics.
+
+#### Standard group by vs window function
+- **groupBy:** Reduces the number of rows. If you group by "Department," you get exactly one row per department. You lose the individual employee details.
+- **Window Function:** Maintains the original row count. You get the aggregate (like a sum or average) attached to every single row in the original dataset.
+
+| Function | Input Rows | Output Rows    | Purpose                                   |
+| -------- | ---------- | -------------- | ----------------------------------------- |
+| Group By | 1,000      | 5 (if 5 depts) | Summary reports, aggregations, totals     |
+| Window   | 1,000      | 1,000          | Rankings, running totals, moving averages |
+
+- **Directional Calculations:** 
+    - Standard groupBy is "unordered." It just looks at a bucket of data and sums it up.
+
+    - Window Functions allow for ordering, which enables "directional" logic that groupBy simply cannot do, such as:
+        1. Running Totals: Adding today's sales to all previous days' sales.
+        2. Lead/Lag: Looking at what the sales were yesterday compared to today on the same row.
+        3. Ranking: Finding the top 3 performers within each group.

@@ -15,8 +15,10 @@ for col in df.columns:
     df = df.withColumnRenamed(col, col.strip())
 
 #Filter and save data'
+print("======================FILTERED DATA==========================")
 high_sales_df = df.filter(df["Profit"] > 50)
-high_sales_df.show()
+print(high_sales_df.count())
+high_sales_df.show(5)
 
 # Writing the result back to a CSV
 high_sales_df.write.format("csv").mode("overwrite").option("header", "true").save("high_profit_sales")
