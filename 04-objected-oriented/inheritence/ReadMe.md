@@ -197,15 +197,84 @@ Python uses the **C3 Linearization (Method Resolution Order)** to address this i
 
 ---
 
-### **Comparison with Other Languages**
-- **C++**:
-  - Requires explicit calls to the parent class to avoid ambiguity.
-  - You need to specify `B::method()` or `C::method()` in `D`.
+## Mixin
+- In Python, a Mixin is a specialized type of multiple inheritance. It’s a class that provides a "bundle" of functionality to other classes but isn't meant to stand on its own.
 
-- **Java**:
-  - Java does not support multiple inheritance of classes (only interfaces) to sidestep the diamond problem entirely.
+### Key Characteristics
+1. **No State:** Mixins typically don't have their own `__init__` methods or store data. They just provide methods.
 
----
+2. **Not Standalone:** You shouldn't instantiate a Mixin directly. `my_mixin = MyMixin()` usually wouldn't make sense.
 
-### **Conclusion**
-Python elegantly solves the diamond problem through the C3 Linearization (MRO). It ensures that the inheritance hierarchy is resolved in a consistent and predictable manner, avoiding ambiguity and promoting code clarity.
+3. **Modular:** They allow you to share code across unrelated classes without a deep, messy inheritance tree.
+
+```python
+class FlyableMixin:
+    def fly(self):
+        print(f"{self.__class__.__name__} is soaring through the sky!")
+
+class Bird(FlyableMixin):
+    def eat(self):
+        print("Eating seeds.")
+
+class Airplane(FlyableMixin):
+    def fuel_up(self):
+        print("Taking on jet fuel.")
+
+# Usage
+sparrow = Bird()
+boeing = Airplane()
+
+sparrow.fly()  # Output: Bird is soaring through the sky!
+boeing.fly()   # Output: Airplane is soaring through the sky!
+```
+
+### Tabular comparison between Standard Inheritence and Mixin
+| Feature           | Standard Inheritance              | Mixin                                     |
+| ----------------- | --------------------------------- | ----------------------------------------- |
+| **Relationship**  | "Is a" (A Dog is an Animal)       | "Has a" / "Can do" (A Dog can talk)       |
+| **Purpose**       | Defining a core hierarchy         | Adding optional/reusable features         |
+| **State**         | Often stores data/attributes      | Usually only contains methods             |
+| **Usage Style**   | Used for strong domain modeling   | Used for code reuse across classes        |
+| **Dependency**    | Child tightly depends on parent   | Loosely coupled, can be combined flexibly |
+| **Reusability**   | Limited (single hierarchy focus)  | High (can be mixed into multiple classes) |
+| **Design Impact** | Deep hierarchies can become rigid | Promotes composition over inheritance     |
+| **Example**       | `class Dog(Animal)`               | `class Dog(TalkMixin)`                    |
+
+### Mixin and Composition
+- Mixins and Composition are both used to solve the same problem: how to give a class new powers without creating a messy, deep inheritance tree.
+
+#### The Core Difference
+The easiest way to distinguish them is by looking at the relationship between the objects:
+
+1. **Mixins use Inheritance ("is-a"):** A class becomes a type of that mixin. It absorbs the mixin’s methods directly into its own identity.
+
+2. **Composition uses References ("has-a"):** A class holds an instance of another class. It delegates tasks to that internal object.
+
+```python
+# =======================================================================================
+# ===================================  Mixin Approach ===================================
+# =======================================================================================
+class LoggerMixin:
+    def log(self, message):
+        print(f"[LOG]: {message}")
+
+class Database(LoggerMixin):
+    def save(self):
+        self.log("Saving data...") # Direct access via 'self'
+
+# =======================================================================================
+# ==============================  Composition Approach ==================================
+# =======================================================================================
+
+class Logger:
+    def log(self, message):
+        print(f"[LOG]: {message}")
+
+class Database:
+    def __init__(self):
+        self.logger = Logger() # The class 'has' a logger
+
+    def save(self):
+        self.logger.log("Saving data...") # Delegation
+
+```
