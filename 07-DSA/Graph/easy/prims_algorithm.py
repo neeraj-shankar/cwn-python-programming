@@ -34,9 +34,9 @@ class PrimsAlgorithm:
             u, v, wt = edge
             graph[u].append(Pair(v, wt))
 
-        for ls in graph:
-            for pr in ls:
-                print(f"Vertex: {pr.vt} and Edge: {pr.wt}")
+        # for ls in graph:
+        #     for pr in ls:
+        #         print(f"Vertex: {pr.vt} and Edge: {pr.wt}")
 
         # Create visited array to track the unvisited sources
         vis = [False for _ in range(vertices+1)]
@@ -48,10 +48,9 @@ class PrimsAlgorithm:
         while len(min_heap) > 0:
 
             rem = heapq.heappop(min_heap)
-
             vertex = rem.vt
             weight = rem.wt
-
+            print(vertex)
             if vis[vertex] == True: 
                 continue
             else:
@@ -59,7 +58,6 @@ class PrimsAlgorithm:
                 ans += weight
                 for nbr in graph[vertex]:
                     if vis[nbr.vt] == False: # look for unvisited neighbour
-                        print(nbr)
                         heapq.heappush(min_heap, nbr)
         return ans
 if __name__ == "__main__":
