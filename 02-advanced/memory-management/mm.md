@@ -1,6 +1,4 @@
 # Core Memory Architecture in Python
-
-## 1. Everything is a PyObject
 In Python, everything is an object stored on the heap. Even a simple integer isn't just 5 in memory—it's a full-fledged object:
 
 ```Python
@@ -18,7 +16,15 @@ print(sys.getsizeof(x))  # 28 bytes (not just 4!)
 
 **Analogy**: Think of objects like registered packages at a post office. You don't just have the item—you have tracking info, metadata, and a storage bin number.
 
-### **2. Memory Pools - Private Heap**
+## **Memory Management in Python**
+
+### 1. Memory Allocation
+Python uses a private heap to store all objects and data structures. You never access this heap directly — the Python memory manager handles it internally.
+
+There are two layers:
+
+1. **System allocator** — Python requests large memory blocks from the OS.
+2. **PyMalloc** — Python's internal allocator, optimized for small objects (≤ 512 bytes). It carves up those large blocks into smaller chunks efficiently.
 
 Python maintains its own **private heap** separate from the system heap:
 ```

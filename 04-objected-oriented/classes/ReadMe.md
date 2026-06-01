@@ -121,3 +121,34 @@ make_it_talk(Robot()) # Beep Boop!
 #### 3. Polymorphism with Inheritance
 - While Duck Typing is flexible, we often use Inheritance to ensure that different classes share the same "blueprint" (interface) via an Abstract Base Class (ABC). 
 - This forces subclasses to implement specific methods.
+
+
+## Dataclass
+
+```python
+from dataclasses import dataclass
+
+class User:
+    
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+        
+    def __repr__(self):
+        
+        return f"User(name={self.name}, age={self.age})"
+
+user = User("Neeraj", 20)
+
+print(user)
+
+
+@dataclass
+class Student:
+    name : str 
+    agesss : str 
+    
+
+stu = Student("Neeraj", 23)
+print(stu)
+```

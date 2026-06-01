@@ -99,6 +99,50 @@ Using a Pool (like `multiprocessing.Pool` in Python) handles three annoying thin
 
 3. **Memory Management:** A Pool reuses the same worker processes for multiple tasks. This is much faster than killing and restarting a process every time.
 
+## Concurrency
+This is about dealing with many things at the same time. It is a structural property of your code. A single-core processor can be concurrent by context-switching (interleaving tasks). You aren't necessarily doing two things at the exact same microsecond, but you are making progress on multiple fronts.
+
+### Ways to Achieve Concurrency
+Concurrency is primarily used to prevent a program from being **"blocked"** by a slow operation, such as network I/O or disk access.
+
+#### A. Multithreading
+Threads are the smallest unit of execution that an operating system can schedule. Within a single process, multiple threads share the same memory space.
+
+- **Best for:** I/O-bound tasks (requesting data from an API, reading files).
+
+- **The Trade-off:** Shared memory leads to "Race Conditions." If two threads try to modify the same variable at once, the data can become corrupted. To prevent this, we use Locks or Mutexes.
+
+#### B. Asynchronous Programming (Async/io)
+Unlike threads, which are managed by the OS, asynchronous tasks are managed by the application itself using an Event Loop.
+
+- **Mechanism:** It uses await and async keywords. When a task hits a blocking operation (like waiting for a database response), it yields control back to the loop, which starts the next task.
+
+- **Best for:** High-scale web servers or chat applications where you need to handle thousands of open connections simultaneously with very low memory overhead.
+
+
+## Parallelism 
+This is about doing many things at the same time. It is a hardware-dependent property. It requires multiple processing units (multi-core CPUs or GPUs) to execute different pieces of code at the exact same physical moment.
+
+### Ways to Achieve Parallelism 
+Parallelism is used when you have a massive amount of computation and you want to finish it faster by throwing more "brains" (cores) at it.
+
+#### A. Multiprocessing 
+This involves spawning separate processes, each with its own memory space and its own instance of the interpreter (in languages like Python).
+
+1. **Best for:** CPU-bound tasks (data crunching, image processing, heavy mathematical simulations).
+2. **The Trade-off:** Higher memory usage because each process needs its own resources. Communication between processes (IPC) is also more complex than sharing memory in threads.
+
+#### B. GPU Acceleration (Data Parallelism)
+While a CPU might have 8 to 16 powerful cores, a GPU has thousands of smaller, simpler cores.
+
+- **Mechanism:** This is "SIMD" (Single Instruction, Multiple Data). You apply the same operation to a massive array of data points at once.
+- **Best for:** Deep learning, graphics rendering, and large-scale matrix operations.
+
+#### C. Distributed Computing
+When one machine isn't enough, parallelism happens across a cluster of servers.
+
+- **Tools:** Technologies like Apache Kafka or RabbitMQ act as the nervous system, distributing messages (tasks) to various "workers" across a network.
+- **Best for:** Large-scale backend infrastructure and processing massive streams of data in real-time.
 
 ## FAQs
 

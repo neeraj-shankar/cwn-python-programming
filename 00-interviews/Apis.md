@@ -80,3 +80,24 @@ Client doesn’t know if it’s talking to:
 👉 Why it matters:
 - Improves scalability
 - Adds security layers
+
+## Explain how you would implement asynchronous processing in a FastAPI-based microservice and when async can actually hurt performance.
+
+Implementing asynchronous processing in FastAPI is straightforward because the framework is built on Starlette, which is designed for high-performance asyncio operations.
+
+### 1. Implementation Strategy
+To implement async correctly, you must ensure that the entire chain of execution—from the route handler to the database driver—is non-blocking.
+
+#### A. The Route Handler
+Use the `async def` keyword. This tells FastAPI to run the function in the existing event loop rather than spawning a thread from a thread pool.
+
+#### B. Asynchronous Clients & Drivers
+If you use async def but then call a blocking library (like requests or a standard psycopg2 driver), you defeat the purpose. You must use async-native libraries:
+
+- **HTTP Requests**: Use `httpx` or `aiohttp` instead of requests.
+
+- **Databases:** Use `asyncpg` (PostgreSQL), `motor` (MongoDB), or SQLAlchemy with the +aiopg or +asyncpg dialect.
+
+- **Background Tasks:** Use FastAPI's built-in BackgroundTasks for small jobs or Celery/ARQ for heavy lifting.
+
+## A downstream service starts timing out intermittently. How would you make your microservice resilient and prevent cascading failures?

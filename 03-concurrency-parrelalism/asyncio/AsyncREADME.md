@@ -23,6 +23,15 @@ Asynchronous programming in Python allows you to write code that can perform mul
 ### Event Loop:
 - The core of asynchronous programming. It manages and executes asynchronous tasks, allowing other tasks to run while waiting for a resource or an event.
 
+#### 🏗️ Fundamental Concept: What IS an Event Loop?
+An event loop is a single-threaded executor that:
+
+1. Runs coroutines until they `await` something
+2. Switches to other ready coroutines
+3. Monitors I/O operations
+4. Resumes coroutines when their I/O completes
+5. Repeats until all work is done
+
 ### Coroutines
 - Special functions declared with async def that can be paused and resumed.
 

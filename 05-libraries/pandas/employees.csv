@@ -1,0 +1,31 @@
+emp_code,name,age,gender,department_name,job_title,job_location,salary,experience,joining_date,performance,is_remote,manager_id
+E001,Aarav Sharma,34,Male,Engineering,Senior Software Engineer,Pune,95000,8,2018-03-15,4.5,True,E010
+E002,Priya Mehta,29,Female,Engineering,Software Engineer,Mumbai,72000,4,2021-07-01,4.2,True,E010
+E003,Rohan Desai,41,Male,Engineering,Principal Engineer,Pune,130000,15,2012-11-20,4.8,False,E010
+E004,Sneha Patil,26,Female,Marketing,Marketing Analyst,Delhi,55000,2,2023-01-10,3.9,True,E011
+E005,Vikram Nair,38,Male,Marketing,Marketing Manager,Mumbai,95000,12,2015-06-25,4.6,False,E011
+E006,Ananya Iyer,31,Female,HR,HR Specialist,Bangalore,60000,6,2019-09-05,4.1,True,E012
+E007,Karan Joshi,27,Male,HR,HR Analyst,Pune,50000,3,2022-04-18,3.7,False,E012
+E008,Divya Rao,35,Female,Finance,Financial Analyst,Hyderabad,80000,9,2017-02-28,4.3,True,E013
+E009,Arjun Kapoor,44,Male,Finance,Finance Manager,Mumbai,115000,18,2009-08-12,4.7,False,E013
+E010,Meera Krishnan,47,Female,Engineering,VP Engineering,Pune,180000,22,2005-05-30,4.9,False,
+E011,Suresh Pillai,45,Male,Marketing,VP Marketing,Delhi,170000,20,2007-03-14,4.8,False,
+E012,Lakshmi Nair,42,Female,HR,HR Director,Bangalore,145000,17,2010-07-22,4.6,False,
+E013,Rajesh Kumar,49,Male,Finance,CFO,Mumbai,220000,25,2003-01-05,4.9,False,
+E014,Pooja Singh,30,Female,Engineering,Software Engineer,Delhi,70000,5,2020-11-03,4.0,True,E010
+E015,Aditya Verma,33,Male,Engineering,DevOps Engineer,Bangalore,88000,7,2018-09-17,4.4,True,E010
+E016,Nisha Gupta,28,Female,Marketing,Content Strategist,Mumbai,58000,3,2022-02-14,3.8,True,E011
+E017,Siddharth Menon,36,Male,Finance,Senior Analyst,Hyderabad,92000,10,2016-04-09,4.2,False,E013
+E018,Kavya Reddy,25,Female,Engineering,Junior Developer,Pune,45000,1,2024-01-20,3.5,True,E010
+E019,Manish Tiwari,40,Male,HR,Training Manager,Delhi,78000,14,2013-10-31,4.3,False,E012
+E020,Ritu Agarwal,32,Female,Marketing,SEO Specialist,Bangalore,63000,6,2019-06-17,4.0,True,E011
+E021,Deepak Chauhan,37,Male,Engineering,Data Engineer,Pune,98000,11,2015-12-08,4.5,True,E010
+E022,Sunita Jain,43,Female,Finance,Accounts Manager,Mumbai,87000,16,2011-03-25,4.4,False,E013
+E023,Nikhil Bose,29,Male,Engineering,Backend Developer,Kolkata,74000,4,2021-08-11,4.1,True,E010
+E024,Shruti Kulkarni,34,Female,HR,Recruitment Lead,Pune,68000,8,2017-11-19,4.2,False,E012
+E025,Rahul Saxena,39,Male,Marketing,Brand Manager,Delhi,102000,13,2014-05-06,4.5,False,E011
+E026,Preeti Shah,27,Female,Engineering,QA Engineer,Ahmedabad,52000,2,2023-03-27,3.6,True,E010
+E027,Amit Pandey,45,Male,Engineering,Solutions Architect,Mumbai,155000,19,2008-07-14,4.8,False,E010
+E028,Bhavna Trivedi,31,Female,Finance,Tax Analyst,Surat,61000,5,2020-09-01,3.9,True,E013
+E029,Gaurav Mishra,36,Male,Marketing,Digital Marketing Lead,Hyderabad,85000,10,2016-01-23,4.3,False,E011
+E030,Tanvi Doshi,24,Female,HR,HR Intern,Pune,30000,0,2024-06-15,3.2,True,E012

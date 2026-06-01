@@ -28,6 +28,7 @@ class FlatternList:
 
         return ans
     @staticmethod
+    
     def solution_iterative(nested_list):
 
         ans = []
