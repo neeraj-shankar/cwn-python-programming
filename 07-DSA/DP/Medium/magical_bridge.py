@@ -18,6 +18,26 @@ Crossing the bridge means reaching beyond the last plank.
 
 class MagicalBridge:
 
+    def solution_tda(self, A):
+
+        memo = []
+
+        return self.min_steps(A, len(A)-1, memo)
+
+
+    def min_steps(self, A: list[int], idx: int, memo: list[int]):
+
+        if idx == 0:
+            return 0
+        
+        normal = self.min_steps(A, idx - 1, memo)
+        magical = 0
+        if idx - A[idx] >= 0:
+            magical = self.min_steps(A, idx-A[idx], memo)
+
+        return min(normal, magical)
+    
+
     def solution_tabular(self, A):
 
 
@@ -52,10 +72,12 @@ if __name__ == "__main__":
 
     # Test case 1:
     A = [2, 3, 1, 1, 1]
+    print(f"Mininum jumps required to cross recursive: {mb.solution_tabular(A)}")
     print(f"Mininum jumps required to cross tabular: {mb.solution_tabular(A)}")
 
     # Test Case 2: 
     A = [1, 2, 3, 1]
+    print(f"Mininum jumps required to cross recursive: {mb.solution_tabular(A)}")
     print(f"Mininum jumps required to cross tabular: {mb.solution_tabular(A)}")
 
 
